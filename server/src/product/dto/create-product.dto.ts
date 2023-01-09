@@ -1,5 +1,3 @@
-import {PriceStatus} from "../price-status.enum";
-
 
 export class CreateProductDto{
 
@@ -9,7 +7,7 @@ export class CreateProductDto{
 
     price: number;
 
-    priceStatus: PriceStatus;
+    priceStatus: boolean;
 
 
 }

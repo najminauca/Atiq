@@ -8,14 +8,10 @@ import { ProductModule } from './product/product.module';
 @Module({
   imports: [
     TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'Justtoday22',
-      database: 'atiq',
-      autoLoadEntities: true,
-      synchronize: true,
+      type: 'sqlite',
+      database: './db/atiq.sqlite',
+      entities: [__dirname + '/**/*.entity{.ts,.js}'],
+      synchronize: false,
     }),
     AuthModule,
     ProductModule,

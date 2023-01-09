@@ -1,5 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { Role } from './role.enum';
+import {Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { Product } from '../product/product.entity';
 
 @Entity()
@@ -13,9 +12,13 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ type: 'enum', enum: Role, default: Role.USER })
-  role: Role;
+  @Column({ default: false })
+  role: boolean;
 
   @OneToMany((type) => Product, (product) => product.user, { eager: true })
   product: Product[];
+
+  @ManyToMany(() => Product)
+  @JoinTable()
+  favorites: Product[];
 }
