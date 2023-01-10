@@ -12,6 +12,12 @@ export class User {
   @Column()
   password: string;
 
+  /*@Column()
+  name: string;
+
+  @Column()
+  lastname: string;*/
+
   @Column({ default: false })
   role: boolean;
 
@@ -20,5 +26,9 @@ export class User {
 
   @ManyToMany(() => Product)
   @JoinTable()
-  favorites: Product[];
+  favoriteProducts: Product[];
+
+  @ManyToMany(() => User)
+  @JoinTable()
+  favoriteSellers: User[];
 }

@@ -15,10 +15,9 @@ import { SearchProductDto } from './dto/search-product.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from '../auth/roles.decorator';
 import { RolesGuard } from '../auth/roles.guard';
-import { PassportModule } from '@nestjs/passport';
 
 @Controller('product')
-@UseGuards(AuthGuard())
+@UseGuards(AuthGuard('jwt'))
 export class ProductController {
   constructor(private productService: ProductService) {}
 
@@ -43,6 +42,6 @@ export class ProductController {
 
   @Get('/product')
   async productById(@Param('id') id: string): Promise<Product> {
-    return this.productById(id);
+    return this.productService.productById(id);
   }
 }
