@@ -18,17 +18,9 @@ export class User {
   @Column()
   lastname: string;*/
 
-  @Column({ default: false })
-  role: boolean;
+  @Column({ default: 'user' })
+  role: string;
 
   @OneToMany((type) => Product, (product) => product.user, { eager: true })
   product: Product[];
-
-  @ManyToMany(() => Product)
-  @JoinTable()
-  favoriteProducts: Product[];
-
-  @ManyToMany(() => User)
-  @JoinTable()
-  favoriteSellers: User[];
 }
