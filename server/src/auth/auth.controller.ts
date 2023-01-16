@@ -4,7 +4,6 @@ import { AuthService } from './auth.service';
 import { User } from './user.entity';
 
 @Controller('auth')
-
 export class AuthController {
   constructor(private authService: AuthService) {}
 
@@ -14,7 +13,6 @@ export class AuthController {
   }
 
   @Post('/login')
-
   logIn(@Body() createUserDto: CreateUserDto) {
     return this.authService.logIn(createUserDto);
   }
