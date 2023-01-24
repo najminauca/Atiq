@@ -17,13 +17,13 @@ import { Roles } from '../auth/roles.decorator';
 import { RolesGuard } from '../auth/roles.guard';
 
 @Controller('product')
-//@UseGuards(AuthGuard('jwt'))
+@UseGuards(AuthGuard('jwt'))
 export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Post('/add')
-  //@Roles('seller')
-  //@UseGuards(RolesGuard)
+  @Roles('seller')
+  @UseGuards(RolesGuard)
   async createProduct(@Body() createProductDto: CreateProductDto) {
     return this.productService.createProduct(createProductDto);
   }

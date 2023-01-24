@@ -3,10 +3,10 @@ import { Product } from '../product/product.entity';
 import {User} from "./user.entity";
 
 @Entity()
-export class FavoriteUser {
+export class FavoriteSeller {
     @PrimaryColumn()
-    user: User;
+    user: string;
 
     @PrimaryColumn()
-    seller: User;
+    seller: string;
 }
