@@ -22,7 +22,9 @@ export class FavoriteService {
         private favoriteSeller: Repository<FavoriteUser>,
         @InjectRepository(User)
         private favoriteProduct: Repository<FavoriteProduct>,
-    ) {}
+    ) {
+
+    }
 
     async addFavoriteSeller(user: User, seller: User): Promise<void> {
 
@@ -39,6 +41,17 @@ export class FavoriteService {
         }
     }
 
+    async isFavoriteSeller(user: User, seller: User): Promise<boolean> {
+        const isFavorite = await this.favoriteSeller.findOne({
+            where: {
+                user: user,
+                seller: seller
+            }
+        })
+
+        return isFavorite != null && isFavorite.user == user && isFavorite.seller == seller
+    }
+
     async addFavoriteProduct(user: User, product: Product): Promise<void> {
 
         const favoriteProduct = this.favoriteProduct.create({
@@ -52,5 +65,16 @@ export class FavoriteService {
                 'server error',
             );
         }
+    }
+
+    async isFavoriteProduct(user: User, product: Product): Promise<boolean> {
+        const isFavorite = await this.favoriteProduct.findOne({
+            where: {
+                user: user,
+                product: product
+            }
+        })
+
+        return isFavorite != null && isFavorite.user == user && isFavorite.product == product
     }
 }

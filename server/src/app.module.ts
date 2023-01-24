@@ -15,7 +15,7 @@ import {FavoriteUser} from "./auth/favorite-user.entity";
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: './db/atiq.sqlite',
-      entities: [User, Product, FavoriteProduct, FavoriteUser],
+      entities: [User, Product /*FavoriteProduct, FavoriteUser*/],
       autoLoadEntities: true,
       synchronize: true,
     }),
