@@ -1,7 +1,5 @@
 import { PassportStrategy } from '@nestjs/passport';
-import {Strategy} from "passport";
-import {ExtractJwt} from "passport-jwt";
-import {AuthService} from "./auth.service";
+import {Strategy, ExtractJwt} from "passport-jwt";
 import {Payload} from "./payload.interface";
 import {Repository} from "typeorm";
 import {User} from "./user.entity";
@@ -17,7 +15,7 @@ export class JwtStrategy extends PassportStrategy(Strategy){
         super(
             {
                 secretOrKey: 'bestSecret',
-                jwtFormRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+                jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             }
         );
     }
