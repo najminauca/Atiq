@@ -45,7 +45,21 @@
       </button>
     </div>
   </form>
-  
+
+  <ng-container
+    *ngIf="searchResults.length > 0; then withResults; else noResults">
+  </ng-container>
+
+  <ng-template #withResults>
+    <li *ngFor="let item of searchResults">{{ item }}</li>
+  </ng-template>
+
+  <ng-template #noResults>
+    <div *ngIf="searchInput.length > 0 && searchResults.length == 0">
+      No results were found for {{searchInput}}.
+    </div>
+  </ng-template>
+
   <p>home works!</p>
 
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -6,15 +6,20 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  searchInput: string | undefined;
+  @Input() searchInput: string;
+  @Input() searchResults: string[];
+  items = ['apple', 'orange', 'banana', 'ballon']
 
-  constructor() { }
+  constructor() {
+    this.searchInput = "";
+    this.searchResults = [];
+  }
 
   ngOnInit(): void {
   }
 
-  onSearch(){
-    console.log("Searching for " + this.searchInput);
+  onSearch() {
+    this.searchResults = this.items.filter(item => item.toLowerCase().includes(this.searchInput.toLowerCase()));
   }
 
 }
