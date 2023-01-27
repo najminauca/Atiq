@@ -22,7 +22,7 @@ export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Post('/add')
-  @Roles(true)
+  @Roles('seller')
   @UseGuards(RolesGuard)
   async createProduct(@Body() createProductDto: CreateProductDto) {
     return this.productService.createProduct(createProductDto);
