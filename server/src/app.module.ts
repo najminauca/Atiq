@@ -7,9 +7,9 @@ import { ProductModule } from './product/product.module';
 import { Product } from './product/product.entity';
 import { User } from './auth/user.entity';
 import { ProductController } from './product/product.controller';
-import {FavoriteProduct} from "./auth/favorite-product.entity";
-import {FavoriteSeller} from "./auth/favorite-seller.entity";
-import {FavoriteModule} from "./auth/favorite.module";
+import {FavoriteProduct} from "./favorite/favorite-product.entity";
+import {FavoriteSeller} from "./favorite/favorite-seller.entity";
+import {FavoriteModule} from "./favorite/favorite.module";
 
 @Module({
   imports: [
