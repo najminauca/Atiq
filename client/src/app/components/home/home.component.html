@@ -10,24 +10,40 @@
       <button type="submit">
         <i class="fa fa-search"></i>
       </button>
-      <ng-container
-        *ngIf="searchResults.length > 0; then withResults; else noResults">
-      </ng-container>
-
-      <ng-template #withResults>
-        <li *ngFor="let item of searchResults">{{ item }}</li>
-      </ng-template>
-
-      <ng-template #noResults>
-        <div *ngIf="searchInput.length > 0 && searchResults.length == 0">
-          No results were found for {{searchInput}}.
-        </div>
-      </ng-template>
     </div>
+  </form>
+  <ng-container
+    *ngIf="searchClicked == false; then normal; else searchIsClicked">
+  </ng-container>
+
+  <ng-template #normal>
     <button class="box" *ngFor="let item of items">
       {{ item }}
     </button>
-  </form>
+  </ng-template>
+
+  <ng-template #searchIsClicked>
+    <p></p>
+    <button type="submit" (click)="onStopSearch()">
+      Close
+    </button>
+    <p></p>
+    <ng-container
+      *ngIf="searchResults.length > 0; then withResults; else noResults">
+    </ng-container>
+  </ng-template>
+
+  <ng-template #withResults>
+    <button class="box" *ngFor="let item of searchResults">
+      {{ item }}
+    </button>
+  </ng-template>
+
+  <ng-template #noResults>
+    <div *ngIf="searchInput.length > 0 && searchResults.length == 0">
+      No results were found for {{searchInput}}.
+    </div>
+  </ng-template>
 
   <p>home works!</p>
 

@@ -9,10 +9,12 @@ export class HomeComponent implements OnInit {
   @Input() searchInput: string;
   @Input() searchResults: string[];
   items = ['apple', 'orange', 'banana', 'ballon', 'kiwi', 'laptop', 'jacke','popo']
+  @Input() searchClicked: boolean;
 
   constructor() {
     this.searchInput = "";
     this.searchResults = [];
+    this.searchClicked = false;
   }
 
   ngOnInit(): void {
@@ -20,6 +22,11 @@ export class HomeComponent implements OnInit {
 
   onSearch() {
     this.searchResults = this.items.filter(item => item.toLowerCase().includes(this.searchInput.toLowerCase()));
+    this.searchClicked = true;
+  }
+
+  async onStopSearch() {
+    this.searchClicked = false;
   }
 
 }
