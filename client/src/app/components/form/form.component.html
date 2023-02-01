@@ -1,9 +1,28 @@
 <div class="form-page">
   <br>
   <div>
-    <p>Title</p>
-    <form (ngSubmit)="onSubmitTitle()">
-      <input id="title-input" type="text">
+    <form (ngSubmit)="onSubmit()">
+      <div class="title-input-container">
+        <p class="title-input-label">Title</p>
+        <textarea class="title-input-textarea" id="title_input"></textarea>
+      </div>
+      <div class="desciption-input-container">
+        <p class="desciption-input-label">Description</p>
+        <textarea class="desciption-input-textarea" id="description_input"></textarea>
+      </div>
+      <div class="price-input-container">
+        <p class="price-input-label">Price</p>
+        <textarea class="price-input-textarea" id="price_input"></textarea>
+        <!-- dropdown menu not yet working -->
+        <div class="price-input-dropdown">
+          <button class="price-input-dropdown-toggle">Dropdown</button>
+          <ul class="price-input-dropdown-menu">
+            <li><a href="#">Option 1</a></li>
+            <li><a href="#">Option 1</a></li>
+            <li><a href="#">Option 1</a></li>
+          </ul>
+        </div>
+      </div>
     </form>
   </div>
 </div>
