@@ -10,6 +10,7 @@ import { ProductController } from './product/product.controller';
 import {FavoriteProduct} from "./favorite/favorite-product.entity";
 import {FavoriteSeller} from "./favorite/favorite-seller.entity";
 import {FavoriteModule} from "./favorite/favorite.module";
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import {FavoriteModule} from "./favorite/favorite.module";
     AuthModule,
     ProductModule,
     FavoriteModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
