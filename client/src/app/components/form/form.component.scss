@@ -1,4 +1,18 @@
 div {text-align: center}
+span {
+  width: 150px;
+  background: #A6BB8D;
+}
+
+.span-description {
+  width: 100px;
+  background: #A6BB8D;
+}
+
+.span-pictures {
+  width: 130px;
+  background: #A6BB8D;
+}
 
 .form-page {
   position: fixed;
@@ -37,7 +51,6 @@ div {text-align: center}
 }
 
 .desciption-input-label {
-  margin-top: 8px;
   margin-right: 16px;
   font-size: 17px;
   color: whitesmoke;
@@ -47,7 +60,6 @@ div {text-align: center}
   border: solid #61876E 1px;
   height: 130px;
   width: 300px;
-  margin-top: 8px;
   margin-right: 16px;
   font-size: 17px;
   background: #EAE7B1;
@@ -70,40 +82,39 @@ div {text-align: center}
   height: 30px;
   width: 100px;
   margin-top: 8px;
+  margin-right: 12px;
+  font-size: 17px;
+  background: #EAE7B1;
+}
+
+.price-input-dropdown-select {
+  border: solid #61876E 1px;
+  height: 30px;
+  width: 190px;
+  margin-top: 8px;
   margin-right: 16px;
   font-size: 17px;
   background: #EAE7B1;
 }
 
-.price-input-dropdown {
-  position: relative;
-  display: inline-block;
+.picture-input-container {
+  display: flex;
+  justify-content: center;
 }
 
-.price-input-dropdown-toggle {
-  background-color: lightgray;
-  padding: 10px 15px;
-  border: none;
-  cursor: pointer;
+.picture-input-label {
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 17px;
+  color: whitesmoke;
 }
 
-.price-input-dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  z-index: 1;
-  display: none;
-  list-style: none;
-  background-color: lightgray;
-  padding: 10px 0;
-  margin: 0;
-  border: 1px solid gray;
+.picture-input-area {
+  border: solid #61876E 1px;
+  height: 130px;
+  width: 300px;
+  margin-right: 16px;
+  background: #EAE7B1;
 }
 
-.price-input-dropdown-menu li {
-  padding: 10px 15px;
-}
 
-.price-input-dropdown-menu a {
-  display: block;
-}
