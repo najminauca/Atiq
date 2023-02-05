@@ -6,7 +6,9 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  selectedPicture: string | ArrayBuffer;
+  selectedPicture: string | ArrayBuffer | null;
+  width = 200;
+  height = 100;
 
   constructor() {
     this.selectedPicture = ""
@@ -20,7 +22,7 @@ export class FormComponent implements OnInit {
   }
 
   selectPicture(event: any) {
-    /*
+
     const file = event.target.files[0];
     const reader = new FileReader();
 
@@ -29,7 +31,7 @@ export class FormComponent implements OnInit {
     };
 
     reader.readAsDataURL(file);
-    */
+
   }
 
 }
