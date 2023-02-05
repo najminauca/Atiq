@@ -10,6 +10,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './components/home/home.component';
 import { FormComponent } from './components/form/form.component';
+import { ChatComponent } from './components/chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FormComponent } from './components/form/form.component';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    FormComponent
+    FormComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
