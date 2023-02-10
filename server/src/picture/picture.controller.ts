@@ -8,8 +8,8 @@ import {
 import { multerOptions } from './config';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { PictureService } from './picture.service';
-import { PictureDto } from './PictureDto/picture.dto';
 import {PicturesEntity} from "./picture.entity";
+import {PictureDto} from "./dto/picture.dto";
 
 @Controller('picture')
 export class PictureController {

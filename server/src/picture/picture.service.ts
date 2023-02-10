@@ -2,7 +2,7 @@ import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { PicturesEntity } from './picture.entity';
 import { Repository } from 'typeorm';
-import { PictureDto } from './PictureDto/picture.dto';
+import {PictureDto} from "./dto/picture.dto";
 
 
 @Injectable()
