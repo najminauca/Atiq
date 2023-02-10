@@ -8,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class HomeComponent implements OnInit {
   @Input() searchInput: string;
   @Input() searchResults: string[];
-  items = ['apple', 'orange', 'banana', 'ballon', 'kiwi', 'laptop', 'jacke','popo']
+  items = ['apple', 'orange', 'banana', 'ballon', 'kiwi', 'laptop', 'jacke','popo'];
   @Input() searchClicked: boolean;
   @Input() heartClicked: boolean;
 

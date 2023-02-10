@@ -5,6 +5,7 @@ import {RegisterComponent} from "./components/register/register.component";
 import {HomeComponent} from "./components/home/home.component";
 import {FormComponent} from "./components/form/form.component";
 import {ChatComponent} from "./components/chat/chat.component";
+import {ProfileComponent} from "./components/profile/profile.component";
 
 const routes: Routes = [
   {
@@ -21,6 +22,9 @@ const routes: Routes = [
   },
   {
     path: 'chat', component: ChatComponent
+  },
+  {
+    path: 'profile', component: ProfileComponent
   },
   {
     path:'**',
