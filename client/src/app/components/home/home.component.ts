@@ -10,11 +10,13 @@ export class HomeComponent implements OnInit {
   @Input() searchResults: string[];
   items = ['apple', 'orange', 'banana', 'ballon', 'kiwi', 'laptop', 'jacke','popo']
   @Input() searchClicked: boolean;
+  @Input() heartClicked: boolean;
 
   constructor() {
     this.searchInput = "";
     this.searchResults = [];
     this.searchClicked = false;
+    this.heartClicked = false;
   }
 
   ngOnInit(): void {
@@ -27,6 +29,10 @@ export class HomeComponent implements OnInit {
 
   async onStopSearch() {
     this.searchClicked = false;
+  }
+
+  onLike() {
+    this.heartClicked = !this.heartClicked;
   }
 
 }

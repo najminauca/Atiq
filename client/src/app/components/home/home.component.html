@@ -19,7 +19,18 @@
   <ng-template #normal>
     <button class="box" *ngFor="let item of items">
       {{ item }}
+      <button class="like-button" (click)="onLike()">
+        <ng-container *ngIf="heartClicked; then heartIsClicked; else heartIsNotClicked"></ng-container>
+      </button>
     </button>
+  </ng-template>
+
+  <ng-template #heartIsClicked>
+    <i class="fa fa-heart" style="color: #D0312D"></i>
+  </ng-template>
+
+  <ng-template #heartIsNotClicked>
+    <i class="fa fa-heart-o"></i>
   </ng-template>
 
   <ng-template #searchIsClicked>
