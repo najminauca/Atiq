@@ -7,10 +7,11 @@ import {FavoriteProduct} from "../favorite/favorite-product.entity";
 import {AuthModule} from "../auth/auth.module";
 import {ChatRoom} from "./chat-room.entity";
 import {Chat} from "./chat.entity";
+import {ChatGateway} from "./chat.gateway";
 
 @Module({
   imports: [TypeOrmModule.forFeature([Chat, ChatRoom])],
-  providers: [ChatService],
+  providers: [ChatGateway, ChatService],
   controllers: [ChatController],
 })
 export class ChatModule {}
