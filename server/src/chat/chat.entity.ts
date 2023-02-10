@@ -1,17 +1,18 @@
-import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
 import {IsOptional} from "class-validator";
+import {type} from "os";
+import {ChatRoom} from "./chat-room.entity";
 
 @Entity()
 export class Chat {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column
-    @IsOptional
-    id: user;
+    @ManyToOne((type) => ChatRoom, (chatRoom) => chatRoom.messages, {eager: false})
+    chatRoom: ChatRoom
 
-    @Column
-    id: seller;
+    @Column()
+    senderID: string;
 
     @Column({ unique: true})
     text: string;

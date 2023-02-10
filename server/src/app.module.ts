@@ -11,13 +11,22 @@ import {FavoriteProduct} from "./favorite/favorite-product.entity";
 import {FavoriteSeller} from "./favorite/favorite-seller.entity";
 import {FavoriteModule} from "./favorite/favorite.module";
 import { ChatModule } from './chat/chat.module';
+import {ChatRoom} from "./chat/chat-room.entity";
+import {Chat} from "./chat/chat.entity";
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: './db/atiq.sqlite',
-      entities: [User, Product, FavoriteProduct, FavoriteSeller],
+      entities: [
+        User,
+        Product,
+        FavoriteProduct,
+        FavoriteSeller,
+        Chat,
+        ChatRoom,
+      ],
       autoLoadEntities: true,
       synchronize: true,
     }),

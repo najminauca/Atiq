@@ -22,11 +22,11 @@ export class AppGateway
 
     @WebSocketServer() server: Server;
 
-    @SubscribeMessage('sendMessage')
+   /* @SubscribeMessage('sendMessage')
     async handleSendMessage(client: Socket, payload: Chat): Promise<void> {
         await this.chatService.createMessage(payload);
         this.server.emit('recMessage', payload);
-    }
+    }*/
 
     afterInit(server: Server) {
         console.log(server);
