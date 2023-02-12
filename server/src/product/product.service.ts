@@ -14,6 +14,8 @@ export class ProductService {
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>
   ) {}
 
   async createProduct(
@@ -46,6 +48,9 @@ export class ProductService {
     }
 
     const products: Product[] = await query.getMany();
+    const sellerFromRepo = await this.userRepository.find();
+    const seller = sellerFromRepo.at(0);
+
     const sendProducts: ProductDto[] = products.map((product: Product) => {
           return new ProductDto(
               product.id,
@@ -54,11 +59,11 @@ export class ProductService {
               product.price,
               product.priceStatus,
               new UserDto(
-                  product.seller.id,
-                  product.seller.username,
-                  product.seller.firstname,
-                  product.seller.lastname,
-                  product.seller.role
+                  seller.id,
+                  seller.username,
+                  seller.firstname,
+                  seller.lastname,
+                  seller.role
               )
           );
         }
@@ -80,6 +85,9 @@ export class ProductService {
         id: id.search,
       },
     });
+    const sellerFromRepo = await this.userRepository.find();
+    const seller = sellerFromRepo.at(0);
+
     return new ProductDto(
         product.id,
         product.title,
@@ -87,11 +95,11 @@ export class ProductService {
         product.price,
         product.priceStatus,
         new UserDto(
-            product.seller.id,
-            product.seller.username,
-            product.seller.firstname,
-            product.seller.lastname,
-            product.seller.role
+            seller.id,
+            seller.username,
+            seller.firstname,
+            seller.lastname,
+            seller.role
         )
     )
   }
