@@ -17,12 +17,14 @@ export class AuthService {
       password
     }));
     console.log(accessToken);
-    localStorage.setItem('accessToken', accessToken.jwt);
+    sessionStorage.setItem('jwt', accessToken.jwt);
   }
 
-  async signup(username: string, password: string){
+  async signup(username: string, firstname: string, lastname: string, password: string){
     await lastValueFrom(this.http.post('http://localhost:3000/auth/signup',{
       username,
+      firstname,
+      lastname,
       password
     }));
   }

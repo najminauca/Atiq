@@ -1,24 +1,24 @@
 <div class="form-page">
   <br>
   <div>
-    <form (ngSubmit)="onSubmit()">
+    <form (ngSubmit)="onSubmit(title, description, price, status)">
       <div class="title-input-container">
         <p class="title-input-label">Title</p>
         <span></span>
-        <textarea class="title-input-textarea" id="title_input"></textarea>
+        <textarea class="title-input-textarea" id="title_input" [(ngModel)]="title"></textarea>
       </div>
       <div class="desciption-input-container">
         <p class="desciption-input-label">Description</p>
         <span class="span-description"></span>
-        <textarea class="desciption-input-textarea" id="description_input"></textarea>
+        <textarea class="desciption-input-textarea" id="description_input" [(ngModel)]="description"></textarea>
       </div>
       <div class="price-input-container">
         <p class="price-input-label">Price</p>
         <span></span>
-        <textarea class="price-input-textarea" id="price_input"></textarea>
+        <textarea class="price-input-textarea" id="price_input" [(ngModel)]="price"></textarea>
         <select class="price-input-dropdown-select">
-          <option value="fixed price">fixed price</option>
-          <option value="negotiable">negotiable</option>
+          <option value="fixed price" (click)="setPriceStatus(false)">fixed price</option>
+          <option value="negotiable" (click)="setPriceStatus(true)">negotiable</option>
         </select>
       </div>
       <div class="price-input-container">
