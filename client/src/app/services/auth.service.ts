@@ -17,7 +17,7 @@ export class AuthService {
       password
     }));
     console.log(accessToken);
-    sessionStorage.setItem('jwt', accessToken.jwt);
+    localStorage.setItem('accessToken', accessToken.jwt);
   }
 
   async signup(username: string, firstname: string, lastname: string, password: string){
@@ -28,4 +28,13 @@ export class AuthService {
       password
     }));
   }
+
+  public getToken() {
+    return localStorage.getItem('accessToken');
+  }
+
+  /*public isAuthenticated(): boolean {
+    const token = this.getToken();
+    return tokenNotExpired(null, token);
+  }*/
 }
