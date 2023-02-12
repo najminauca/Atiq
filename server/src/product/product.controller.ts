@@ -14,17 +14,15 @@ import { Product } from './product.entity';
 import { SearchProductDto } from './dto/search-product.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Roles } from '../auth/roles.decorator';
-import { Role } from '../auth/role.enum';
 import { RolesGuard } from '../auth/roles.guard';
-import { PassportModule } from '@nestjs/passport';
 
 @Controller('product')
-@UseGuards(AuthGuard())
+@UseGuards(AuthGuard('jwt'))
 export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Post('/add')
-  @Roles(Role.ADMIN)
+  @Roles(true)
   @UseGuards(RolesGuard)
   async createProduct(@Body() createProductDto: CreateProductDto) {
     return this.productService.createProduct(createProductDto);
@@ -44,6 +42,6 @@ export class ProductController {
 
   @Get('/product')
   async productById(@Param('id') id: string): Promise<Product> {
-    return this.productById(id);
+    return this.productService.productById(id);
   }
 }
