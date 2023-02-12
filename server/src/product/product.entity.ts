@@ -7,8 +7,6 @@ export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  //Fremdschulssel für seller
-
   @Column()
   title: string;
 
@@ -23,5 +21,5 @@ export class Product {
 
   @ManyToOne((type) => User, (user) => user.product, { eager: false })
   @Exclude({ toPlainOnly: true })
-  user: User;
+  seller: User;
 }

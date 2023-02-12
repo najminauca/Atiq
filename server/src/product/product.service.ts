@@ -13,14 +13,18 @@ export class ProductService {
     private productRepository: Repository<Product>,
   ) {}
 
-  async createProduct(createProductDto: CreateProductDto): Promise<void> {
+  async createProduct(
+    createProductDto: CreateProductDto,
+    seller: User,
+  ): Promise<void> {
     const { title, description, price, priceStatus } = createProductDto;
 
     const product = this.productRepository.create({
-      title,
-      description,
-      price,
-      priceStatus,
+      title: title,
+      description: description,
+      price: price,
+      priceStatus: priceStatus,
+      seller: seller,
     });
 
     await this.productRepository.save(product);
@@ -41,14 +45,17 @@ export class ProductService {
     return products;
   }
 
-  async deleteProduct(id: string): Promise<void> {
-    const deletedProduct = await this.productRepository.delete({ id });
+  async deleteProduct(id: SearchProductDto, seller: User): Promise<void> {
+    const deletedProduct = await this.productRepository.delete({
+      id: id.search,
+      seller: seller,
+    });
   }
 
-  async productById(id: string): Promise<Product> {
+  async productById(id: SearchProductDto): Promise<Product> {
     const product = this.productRepository.findOne({
       where: {
-        id: id,
+        id: id.search,
       },
     });
 

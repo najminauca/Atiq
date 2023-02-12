@@ -1,5 +1,6 @@
 import {Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { Product } from '../product/product.entity';
+import {IsOptional} from "class-validator";
 
 @Entity()
 export class User {
@@ -12,15 +13,15 @@ export class User {
   @Column()
   password: string;
 
-  /*@Column()
-  name: string;
+  @Column()
+  firstname: string;
 
   @Column()
-  lastname: string;*/
+  lastname: string;
 
   @Column({ default: 'user' })
   role: string;
 
-  @OneToMany((type) => Product, (product) => product.user, { eager: true })
+  @OneToMany((type) => Product, (product) => product.seller, { eager: true })
   product: Product[];
 }
