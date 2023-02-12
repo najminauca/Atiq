@@ -33,22 +33,10 @@ export class ProductController {
     return this.productService.createProduct(createProductDto, seller);
   }
 
-  @Get('/all')
-  async getProducts(
-    @Query() searchProductDto: SearchProductDto,
-  ): Promise<Product[]> {
-    return this.productService.getProducts(searchProductDto);
-  }
-
   @Roles('seller')
   @UseGuards(RolesGuard)
   @Delete('/delete')
   async deleteProduct(@Body() id: SearchProductDto, @GetUser() seller: User): Promise<void> {
     return this.productService.deleteProduct(id, seller);
-  }
-
-  @Get('/product')
-  async productById(@Body() id: SearchProductDto): Promise<Product> {
-    return this.productService.productById(id);
   }
 }
