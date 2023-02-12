@@ -11,6 +11,7 @@ import {FavoriteSeller} from "./favorite-seller.entity";
 import {FavoriteProduct} from "./favorite-product.entity";
 import {FavProductDto} from "./dto/fav-product.dto";
 import {FavSellerDto} from "./dto/fav-seller.dto";
+import {Product} from "../product/product.entity";
 
 @Injectable()
 export class FavoriteService {
@@ -19,13 +20,22 @@ export class FavoriteService {
         private favoriteSeller: Repository<FavoriteSeller>,
         @InjectRepository(FavoriteProduct)
         private favoriteProduct: Repository<FavoriteProduct>,
+        @InjectRepository(User)
+        private userRepo: Repository<User>,
+        @InjectRepository(Product)
+        private productRepo: Repository<Product>
     ) {
     }
 
     async addFavoriteSeller(seller: FavSellerDto, user: User): Promise<void> {
+        const favSeller = await this.userRepo.findOne({
+            where: {
+                id: seller.id
+            }
+        })
         const favoriteUser = this.favoriteSeller.create({
-            user: user.id,
-            seller: seller.seller
+            user: user,
+            seller: favSeller
         });
         try {
             await this.favoriteSeller.save(favoriteUser);
@@ -36,17 +46,27 @@ export class FavoriteService {
         }
     }
     async deleteFavoriteSeller(seller: FavSellerDto, user: User): Promise<void> {
+        const favSeller = await this.userRepo.findOne({
+            where: {
+                id: seller.id
+            }
+        })
         await this.favoriteSeller.delete({
-            user: user.id,
-            seller: seller.seller
+            user: user,
+            seller: favSeller
         });
     }
 
     async isFavoriteSeller(seller: FavSellerDto, user: User): Promise<boolean> {
+        const favSeller = await this.userRepo.findOne({
+            where: {
+                id: seller.id
+            }
+        })
         const isFavorite = await this.favoriteSeller.findOne({
             where: {
-                user: user.id,
-                seller: seller.seller
+                user: user,
+                seller: favSeller
             }
         })
 
@@ -54,9 +74,14 @@ export class FavoriteService {
     }
 
     async addFavoriteProduct(product: FavProductDto, user: User): Promise<void> {
+        const favProduct = await this.productRepo.findOne({
+            where: {
+                id: product.id
+            }
+        })
         const favoriteProduct = this.favoriteProduct.create({
-            user: user.id,
-            product: product.product
+            user: user,
+            product: favProduct
         });
         try {
             await this.favoriteProduct.save(favoriteProduct);
@@ -68,17 +93,27 @@ export class FavoriteService {
     }
 
     async deleteFavoriteProduct(product: FavProductDto, user: User): Promise<void> {
+        const favProduct = await this.productRepo.findOne({
+            where: {
+                id: product.id
+            }
+        })
         await this.favoriteProduct.delete({
-            user: user.id,
-            product: product.product
+            user: user,
+            product: favProduct
         });
     }
 
     async isFavoriteProduct(product: FavProductDto, user: User): Promise<boolean> {
+        const favProduct = await this.productRepo.findOne({
+            where: {
+                id: product.id
+            }
+        })
         const isFavorite = await this.favoriteProduct.findOne({
             where: {
-                user: user.id,
-                product: product.product
+                user: user,
+                product: favProduct
             }
         })
 

@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import { User } from '../auth/user.entity';
 import { Exclude } from 'class-transformer';
+import {FavoriteProduct} from "../favorite/favorite-product.entity";
 
 @Entity()
 export class Product {
@@ -22,4 +23,7 @@ export class Product {
   @ManyToOne((type) => User, (user) => user.product, { eager: false })
   @Exclude({ toPlainOnly: true })
   seller: User;
+
+  @OneToMany((type) => FavoriteProduct, (product) => product.product, { eager: true })
+  favored: Product[];
 }
