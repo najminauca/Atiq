@@ -10,11 +10,11 @@ export class ProductDto {
 
     public price: number;
 
-    public priceStatus: boolean;
+    public priceStatus: string;
 
     public seller: UserDto;
 
-    constructor(id: string, title: string, description: string, price: number, priceStatus: boolean, seller: UserDto) {
+    constructor(id: string, title: string, description: string, price: number, priceStatus: string, seller: UserDto) {
         this.id = id
         this.title = title
         this.description = description

@@ -17,8 +17,8 @@ export class Product {
   @Column({ type: 'decimal', precision: 10, scale: 2, default: 0 })
   price: number;
 
-  @Column({ default: false })
-  priceStatus: boolean;
+  @Column({ default: 'fixed' })
+  priceStatus: string;
 
   @ManyToOne((type) => User, (user) => user.product, { eager: false })
   @Exclude({ toPlainOnly: true })

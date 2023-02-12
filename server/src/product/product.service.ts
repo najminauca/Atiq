@@ -15,7 +15,7 @@ export class ProductService {
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
   ) {}
 
   async createProduct(

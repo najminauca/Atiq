@@ -16,9 +16,9 @@
         <p class="price-input-label">Price</p>
         <span></span>
         <input id="price-input" type="text" [(ngModel)]="price" name="price">
-        <select class="price-input-dropdown-select">
-          <option value="fixed price" (select)="setPriceStatus(false)">fixed price</option>
-          <option value="negotiable" (select)="setPriceStatus(true)">negotiable</option>
+        <select id="price-input-dropdown-select" [(ngModel)]="status" class="dropdown-select">
+          <option value="fixed">fixed price</option>
+          <option value="negotiable">negotiable</option>
         </select>
       </div>
       <div class="price-input-container">

@@ -16,7 +16,9 @@ export class AuthService {
       username,
       password
     }));
+
     console.log(accessToken);
+    localStorage.setItem('user', username)
     localStorage.setItem('accessToken', accessToken.jwt);
   }
 
@@ -33,8 +35,11 @@ export class AuthService {
     return localStorage.getItem('accessToken');
   }
 
-  /*public isAuthenticated(): boolean {
-    const token = this.getToken();
-    return tokenNotExpired(null, token);
-  }*/
+  public isLoggedIn() {
+    return localStorage.getItem('accessToken') != '';
+  }
+
+  public logOut() {
+    localStorage.removeItem('accessToken');
+  }
 }
