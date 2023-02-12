@@ -1,4 +1,5 @@
 import {UserDto} from "../../auth/dto/user.dto";
+import {User} from "../../auth/user.entity";
 
 export class ProductDto {
     public id: string;

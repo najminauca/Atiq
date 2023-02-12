@@ -17,8 +17,10 @@
   </ng-container>
 
   <ng-template #normal>
-    <button class="box" *ngFor="let item of items">
-      {{ item }}
+    <button class="box" *ngFor="let item of productList">
+      {{ item.title }}
+      {{ item.description }}
+      {{ item.seller.firstname }}
       <button class="like-button" (click)="onLike()">
         <ng-container *ngIf="heartClicked; then heartIsClicked; else heartIsNotClicked"></ng-container>
       </button>
