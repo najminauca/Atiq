@@ -1,10 +1,10 @@
-import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { Product } from './product.entity';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CreateProductDto } from './dto/create-product.dto';
-import { SearchProductDto } from './dto/search-product.dto';
-import { User } from '../auth/user.entity';
+import {Injectable} from '@nestjs/common';
+import {Repository} from 'typeorm';
+import {Product} from './product.entity';
+import {InjectRepository} from '@nestjs/typeorm';
+import {CreateProductDto} from './dto/create-product.dto';
+import {SearchProductDto} from './dto/search-product.dto';
+import {User} from '../auth/user.entity';
 
 @Injectable()
 export class ProductService {
@@ -13,14 +13,18 @@ export class ProductService {
     private productRepository: Repository<Product>,
   ) {}
 
-  async createProduct(createProductDto: CreateProductDto): Promise<void> {
+  async createProduct(
+    createProductDto: CreateProductDto,
+    seller: User,
+  ): Promise<void> {
     const { title, description, price, priceStatus } = createProductDto;
 
     const product = this.productRepository.create({
-      title,
-      description,
-      price,
-      priceStatus,
+      title: title,
+      description: description,
+      price: price,
+      priceStatus: priceStatus,
+      seller: seller,
     });
 
     await this.productRepository.save(product);
@@ -41,17 +45,18 @@ export class ProductService {
     return products;
   }
 
-  async deleteProduct(id: string): Promise<void> {
-    const deletedProduct = await this.productRepository.delete({ id });
+  async deleteProduct(id: SearchProductDto, seller: User): Promise<void> {
+    await this.productRepository.delete({
+      id: id.search,
+      seller: seller,
+    });
   }
 
-  async productById(id: string): Promise<Product> {
-    const product = this.productRepository.findOne({
+  async productById(id: SearchProductDto): Promise<Product> {
+    return await this.productRepository.findOne({
       where: {
-        id: id,
+        id: id.search,
       },
     });
-
-    return product;
   }
 }

@@ -1,6 +1,5 @@
 
 export class CreateProductDto{
-
     title: string;
 
     description: string;
@@ -8,6 +7,4 @@ export class CreateProductDto{
     price: number;
 
     priceStatus: boolean;
-
-
 }

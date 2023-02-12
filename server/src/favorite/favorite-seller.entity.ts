@@ -1,10 +1,27 @@
-import {Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from 'typeorm';
+import {
+    Column,
+    Entity,
+    JoinTable,
+    ManyToMany,
+    ManyToOne,
+    OneToMany,
+    PrimaryColumn,
+    PrimaryGeneratedColumn
+} from 'typeorm';
+import {User} from "../auth/user.entity";
+import {Exclude} from "class-transformer";
+import {Product} from "../product/product.entity";
 
 @Entity()
 export class FavoriteSeller {
-    @PrimaryColumn()
-    user: string;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-    @PrimaryColumn()
-    seller: string;
+    @ManyToOne((type) => User, (user) => user.followingUser, { eager: false })
+    @Exclude({ toPlainOnly: true })
+    user: User;
+
+    @ManyToOne((type) => User, (user) => user.followedUser, { eager: false })
+    @Exclude({ toPlainOnly: true })
+    seller: User;
 }
