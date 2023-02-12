@@ -5,6 +5,9 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {CreateProductDto} from './dto/create-product.dto';
 import {SearchProductDto} from './dto/search-product.dto';
 import {User} from '../auth/user.entity';
+import {ProductDto} from "./dto/product.dto";
+import {ProductListDto} from "./dto/product-list.dto";
+import {UserDto} from "../auth/dto/user.dto";
 
 @Injectable()
 export class ProductService {
@@ -30,7 +33,9 @@ export class ProductService {
     await this.productRepository.save(product);
   }
 
-  async getProducts(searchProductDto: SearchProductDto): Promise<Product[]> {
+  async getProducts(
+    searchProductDto: SearchProductDto,
+  ): Promise<ProductListDto> {
     const { search } = searchProductDto;
 
     const query = this.productRepository.createQueryBuilder('product');
@@ -40,9 +45,26 @@ export class ProductService {
       query.andWhere('product.title = :search', { search });
     }
 
-    const products = await query.getMany();
+    const products: Product[] = await query.getMany();
+    const sendProducts: ProductDto[] = products.map((product: Product) => {
+          return new ProductDto(
+              product.id,
+              product.title,
+              product.description,
+              product.price,
+              product.priceStatus,
+              new UserDto(
+                  product.seller.id,
+                  product.seller.username,
+                  product.seller.firstname,
+                  product.seller.lastname,
+                  product.seller.role
+              )
+          );
+        }
+    )
 
-    return products;
+    return new ProductListDto(sendProducts);
   }
 
   async deleteProduct(id: SearchProductDto, seller: User): Promise<void> {
@@ -52,11 +74,25 @@ export class ProductService {
     });
   }
 
-  async productById(id: SearchProductDto): Promise<Product> {
-    return await this.productRepository.findOne({
+  async productById(id: SearchProductDto): Promise<ProductDto> {
+    const product = await this.productRepository.findOne({
       where: {
         id: id.search,
       },
     });
+    return new ProductDto(
+        product.id,
+        product.title,
+        product.description,
+        product.price,
+        product.priceStatus,
+        new UserDto(
+            product.seller.id,
+            product.seller.username,
+            product.seller.firstname,
+            product.seller.lastname,
+            product.seller.role
+        )
+    )
   }
 }
