@@ -6,12 +6,15 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './components/home/home.component';
 import { FormComponent } from './components/form/form.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import {AuthInterceptor} from "./interceptor/auth.interceptor";
+import {AuthService} from "./services/auth.service";
+import {FormModule} from "./components/form/form.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +22,6 @@ import { ProfileComponent } from './components/profile/profile.component';
     LoginComponent,
     RegisterComponent,
     HomeComponent,
-    FormComponent,
     ChatComponent,
     ProfileComponent
   ],
@@ -29,9 +31,17 @@ import { ProfileComponent } from './components/profile/profile.component';
     NgbModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormModule
   ],
-  providers: [],
+  providers: [
+    AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

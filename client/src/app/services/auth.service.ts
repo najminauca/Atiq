@@ -20,10 +20,21 @@ export class AuthService {
     localStorage.setItem('accessToken', accessToken.jwt);
   }
 
-  async signup(username: string, password: string){
+  async signup(username: string, firstname: string, lastname: string, password: string){
     await lastValueFrom(this.http.post('http://localhost:3000/auth/signup',{
       username,
+      firstname,
+      lastname,
       password
     }));
   }
+
+  public getToken() {
+    return localStorage.getItem('accessToken');
+  }
+
+  /*public isAuthenticated(): boolean {
+    const token = this.getToken();
+    return tokenNotExpired(null, token);
+  }*/
 }

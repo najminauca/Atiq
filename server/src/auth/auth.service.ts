@@ -55,7 +55,7 @@ export class AuthService {
     if (user && (await bycrpt.compare(password, user.password))) {
       const payload: Payload = { username };
 
-      const jwt = await this.jwtService.sign(payload);
+      const jwt = this.jwtService.sign(payload);
 
       return { jwt };
     } else {
