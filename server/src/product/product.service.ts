@@ -1,4 +1,4 @@
-import {Injectable} from '@nestjs/common';
+import {Injectable, Res} from '@nestjs/common';
 import {Repository} from 'typeorm';
 import {Product} from './product.entity';
 import {InjectRepository} from '@nestjs/typeorm';
@@ -21,7 +21,7 @@ export class ProductService {
   async createProduct(
     createProductDto: CreateProductDto,
     seller: User,
-  ): Promise<void> {
+  ): Promise<SearchProductDto> {
     const { title, description, price, priceStatus } = createProductDto;
 
     const product = this.productRepository.create({
@@ -33,6 +33,7 @@ export class ProductService {
     });
 
     await this.productRepository.save(product);
+    return new SearchProductDto(await this.productRepository.getId(product));
   }
 
   async getProducts(

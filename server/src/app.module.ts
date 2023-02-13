@@ -13,6 +13,8 @@ import {FavoriteModule} from "./favorite/favorite.module";
 import { ChatModule } from './chat/chat.module';
 import {ChatRoom} from "./chat/chat-room.entity";
 import {Chat} from "./chat/chat.entity";
+import {PicturesEntity} from "./picture/picture.entity";
+import {PictureModule} from "./picture/picture.module";
 
 @Module({
   imports: [
@@ -26,6 +28,7 @@ import {Chat} from "./chat/chat.entity";
         FavoriteSeller,
         Chat,
         ChatRoom,
+        PicturesEntity,
       ],
       autoLoadEntities: true,
       synchronize: true,
@@ -34,6 +37,7 @@ import {Chat} from "./chat/chat.entity";
     ProductModule,
     FavoriteModule,
     ChatModule,
+    PictureModule,
   ],
   controllers: [AppController],
   providers: [AppService],

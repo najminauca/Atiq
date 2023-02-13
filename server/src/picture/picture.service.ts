@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { PicturesEntity } from './picture.entity';
 import { Repository } from 'typeorm';
 import {PictureDto} from "./dto/picture.dto";
+import {Product} from "../product/product.entity";
 
 
 @Injectable()
@@ -10,13 +11,19 @@ export class PictureService {
   constructor(
     @InjectRepository(PicturesEntity)
     private picturesRepository: Repository<PicturesEntity>,
+    @InjectRepository(Product)
+    private productRepo: Repository<Product>,
   ) {}
 
   async savePicture(picture: string, addPictDto: PictureDto): Promise<void> {
-    const { product } = addPictDto;
+    const product = await this.productRepo.findOne({
+      where: {
+        id: addPictDto.product,
+      },
+    });
     const pictures = this.picturesRepository.create({
-      picture: picture,
-      product: product,
+      picture,
+      product,
     });
     try {
       await this.picturesRepository.save(pictures);
@@ -26,20 +33,29 @@ export class PictureService {
   }
 
   async deletePicture(delPictDto: PictureDto): Promise<void> {
-    const{ picture, product } = delPictDto;
+    const product = await this.productRepo.findOne({
+      where: {
+        id: delPictDto.product,
+      },
+    });
     await this.picturesRepository.delete({
-      picture: picture,
+      picture: delPictDto.picture,
       product: product,
     });
   }
 
   async getPictures(id: string): Promise<PicturesEntity[]> {
-
-    const pictures = await this.picturesRepository.find({
+    const product = await this.productRepo.findOne({
       where: {
-        product: id,
+        id: id,
       },
     });
+
+    const pictures = await this.picturesRepository
+        .createQueryBuilder('pictures')
+        .where({
+          product: product,
+        }).getMany()
 
     return pictures;
   }

@@ -1,7 +1,7 @@
 import {
   Body,
   Controller, Get, Param,
-  Post,
+  Post, Res,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -28,8 +28,13 @@ export class PictureController {
     return await this.pictureService.deletePicture(delPictDto);
   }
 
-  @Get('/get-picture/:id')
-  async getPicture(@Param('id') id): Promise<PicturesEntity[]> {
+  @Get('/get-pictures/:id')
+  async getPictures(@Param('id') id): Promise<PicturesEntity[]> {
     return this.pictureService.getPictures(id);
+  }
+
+  @Get('/get-image/:imgpath')
+  async getImage(@Param('imgpath') image, @Res() res) {
+    return res.sendFile(image, { root: 'uploads' });
   }
 }

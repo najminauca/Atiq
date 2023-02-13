@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import {Column, Entity, ManyToOne, PrimaryColumn} from 'typeorm';
 import { IsString } from 'class-validator';
+import {Product} from "../product/product.entity";
 
 @Entity()
 export class PicturesEntity {
@@ -7,7 +8,6 @@ export class PicturesEntity {
   @PrimaryColumn()
   picture: string;
 
-  @IsString()
-  @Column()
-  product: string;
+  @ManyToOne(() => Product, (product) => product.pictures, { eager: false })
+  product: Product;
 }

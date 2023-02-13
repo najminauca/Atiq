@@ -27,7 +27,10 @@
         <p class="picture-input-label">Pictures</p>
         <span class="span-pictures"></span>
         <div class="picture-input-area" id="picture-container">
-          <img *ngIf="selectedPicture" [src]="selectedPicture" [style.width.px]="width" [style.height.px]="height">
+          <div *ngFor="let img of selectedPicture">
+            <p>{{img.name}}</p>
+          </div>
+          <!--img *ngIf="selectedPicture" [src]="selectedPicture" [style.width.px]="width" [style.height.px]="height"-->
         </div>
       </div>
       <br>
