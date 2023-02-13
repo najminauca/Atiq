@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
   }
 
   async getProductList(): Promise<void> {
-    const data: any = await lastValueFrom(this.http.get("http://localhost:3000/productlist/all"));
+    const data: any = await lastValueFrom(this.http.get("http://localhost:3000/product/all"));
     this.productList = data.productList;
   }
 

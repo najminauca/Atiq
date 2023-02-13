@@ -17,7 +17,7 @@
   </ng-container>
 
   <ng-template #normal>
-    <button class="box" *ngFor="let item of productList">
+    <button class="box" *ngFor="let item of productList" routerLink="/product/{{item.id}}">
       {{ item.title }}
       {{ item.description }}
       {{ item.seller.firstname }}
