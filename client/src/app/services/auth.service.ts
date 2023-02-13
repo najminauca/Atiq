@@ -11,18 +11,14 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   async login(username: string, password: string){
-    try{
-      const accessToken = await lastValueFrom(this.http.post<any>('http://localhost:3000/auth/login', {
-        username,
-        password
-      }));
-      console.log(accessToken);
-      localStorage.setItem('user', username)
-      localStorage.setItem('accessToken', accessToken.jwt);
-      this.isLoggedIn = true
-    } catch(e) {
-      console.log(e)
-    }
+    const accessToken = await lastValueFrom(this.http.post<any>('http://localhost:3000/auth/login', {
+      username,
+      password
+    }));
+    console.log(accessToken);
+    localStorage.setItem('user', username)
+    localStorage.setItem('accessToken', accessToken.jwt);
+    this.isLoggedIn = true
   }
 
   async signup(username: string, firstname: string, lastname: string, password: string){

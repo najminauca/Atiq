@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {lastValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-item',
@@ -10,11 +11,13 @@ import {HttpClient} from "@angular/common/http";
 export class ItemComponent implements OnInit {
   public isProductLiked?: boolean
   @Input() product: any;
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public authService: AuthService) {}
 
   ngOnInit(): void {
     console.log(this.product)
-    this.updateProductBool()
+    if(this.authService.isLoggedIn) {
+      this.updateProductBool()
+    }
   }
 
   async onLike() {

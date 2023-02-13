@@ -9,7 +9,6 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  isLoggedIn: boolean = false;
   loginForm!: FormGroup;
   loginError: string='' ;
 
@@ -30,12 +29,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.loginForm.value.username,this.loginForm.value.password)
       .then(jwt => {
         this.router.navigate(['/home']);
-        this.isLoggedIn = true;
       })
       .catch(error => {
         this.loginError = 'please check your credentials again.';
         console.error(error);
       });
   }
-
 }
