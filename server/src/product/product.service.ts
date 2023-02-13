@@ -15,7 +15,7 @@ export class ProductService {
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
   ) {}
 
   async createProduct(
@@ -79,10 +79,10 @@ export class ProductService {
     });
   }
 
-  async productById(id: SearchProductDto): Promise<ProductDto> {
+  async productById(id: string): Promise<ProductDto> {
     const product = await this.productRepository.findOne({
       where: {
-        id: id.search,
+        id: id,
       },
     });
     const sellerFromRepo = await this.userRepository.find();

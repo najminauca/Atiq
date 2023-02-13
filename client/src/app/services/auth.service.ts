@@ -16,8 +16,10 @@ export class AuthService {
       username,
       password
     }));
+
     console.log(accessToken);
-    sessionStorage.setItem('jwt', accessToken.jwt);
+    localStorage.setItem('user', username)
+    localStorage.setItem('accessToken', accessToken.jwt);
   }
 
   async signup(username: string, firstname: string, lastname: string, password: string){
@@ -27,5 +29,17 @@ export class AuthService {
       lastname,
       password
     }));
+  }
+
+  public getToken() {
+    return localStorage.getItem('accessToken');
+  }
+
+  public isLoggedIn() {
+    return localStorage.getItem('accessToken') != '';
+  }
+
+  public logOut() {
+    localStorage.removeItem('accessToken');
   }
 }

@@ -6,5 +6,5 @@ export class CreateProductDto{
 
     price: number;
 
-    priceStatus: boolean;
+    priceStatus: string;
 }

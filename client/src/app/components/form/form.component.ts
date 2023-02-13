@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {lastValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-form',
@@ -8,36 +9,30 @@ import {HttpClient} from "@angular/common/http";
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  @Input() title: string;
-  @Input() description: string;
-  @Input() price: number
-  @Input() status: boolean;
-  selectedPicture: string | ArrayBuffer | null;
+  public title: string = "";
+  public description: string = "";
+  public price: number = 0;
+  public status = 'fixed';
+  public selectedPicture: string | ArrayBuffer | null;
   width = 200;
   height = 100;
+  home: any
 
-  constructor(public http: HttpClient) {
-    this.title = ""
-    this.description = ""
-    this.price = 0.0
-    this.status = false
+  constructor(public http: HttpClient, private router: Router) {
     this.selectedPicture = ""
   }
 
   ngOnInit(): void {
   }
 
-  async onSubmit(title: string, description: string, price: number, status: boolean) {
+  async onSubmit() {
     await lastValueFrom(this.http.post("http://localhost:3000/product/add", {
-      title,
-      description,
-      price,
-      status
+      title: this.title,
+      description: this.description,
+      price: this.price,
+      status: this.status
     }));
-  }
-
-  setPriceStatus(bool: boolean) {
-    this.status = bool
+    await this.router.navigateByUrl('/home')
   }
 
   selectPicture(event: any) {

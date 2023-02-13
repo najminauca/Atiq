@@ -16,6 +16,7 @@
 <!--    *ngIf="searchClicked == false; then normal; else searchIsClicked">-->
 <!--  </ng-container>-->
 
+<<<<<<< HEAD
 <!--  <ng-template #normal>-->
 <!--    <button class="box" *ngFor="let item of productList">-->
 <!--      {{ item.title }}-->
@@ -26,6 +27,18 @@
 <!--      </button>-->
 <!--    </button>-->
 <!--  </ng-template>-->
+=======
+  <ng-template #normal>
+    <button class="box" *ngFor="let item of productList" routerLink="/product/{{item.id}}">
+      {{ item.title }}
+      {{ item.description }}
+      {{ item.seller.firstname }}
+      <button class="like-button" (click)="onLike()">
+        <ng-container *ngIf="heartClicked; then heartIsClicked; else heartIsNotClicked"></ng-container>
+      </button>
+    </button>
+  </ng-template>
+>>>>>>> 93279d0907ca9b02c5ab8476bcd78a1895c599b8
 
 <!--  <ng-template #heartIsClicked>-->
 <!--    <i class="fa fa-heart" style="color: #D0312D"></i>-->

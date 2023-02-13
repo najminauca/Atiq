@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
     // this.productList = this.productService.productList;
   }
 
+<<<<<<< HEAD
   // fetchProducts(){
   //   this.productService.getProducts();
   // }
@@ -48,6 +49,12 @@ export class HomeComponent implements OnInit {
   //   const data: any = await lastValueFrom(this.http.get("http://localhost:3000/productlist/all"));
   //   this.productList = data.productList;
   // }
+=======
+  async getProductList(): Promise<void> {
+    const data: any = await lastValueFrom(this.http.get("http://localhost:3000/product/all"));
+    this.productList = data.productList;
+  }
+>>>>>>> 93279d0907ca9b02c5ab8476bcd78a1895c599b8
 
   onSearch() {
     //this.searchResults = this.items.filter(item => item.toLowerCase().includes(this.searchInput.toLowerCase()));
