@@ -15,6 +15,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import {AuthInterceptor} from "./interceptor/auth.interceptor";
 import {AuthService} from "./services/auth.service";
 import {FormModule} from "./components/form/form.module";
+import { ProductComponent } from './components/product/product.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {FormModule} from "./components/form/form.module";
     RegisterComponent,
     HomeComponent,
     ChatComponent,
-    ProfileComponent
+    ProfileComponent,
+    ProductComponent
   ],
   imports: [
     BrowserModule,
