@@ -2,6 +2,7 @@ import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'type
 import { User } from '../auth/user.entity';
 import { Exclude } from 'class-transformer';
 import {FavoriteProduct} from "../favorite/favorite-product.entity";
+import {PicturesEntity} from "../picture/picture.entity";
 
 @Entity()
 export class Product {
@@ -23,6 +24,9 @@ export class Product {
   @ManyToOne((type) => User, (user) => user.product, { eager: false })
   @Exclude({ toPlainOnly: true })
   seller: User;
+
+  @OneToMany(() => PicturesEntity, (picture) => picture.product, { eager: true })
+  pictures: PicturesEntity[];
 
   @OneToMany((type) => FavoriteProduct, (product) => product.product, { eager: true })
   favored: Product[];
