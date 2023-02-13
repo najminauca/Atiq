@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {lastValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
+import {ProductService} from "../../services/product.service";
 
 @Component({
   selector: 'app-form',
@@ -18,7 +19,7 @@ export class FormComponent implements OnInit {
   height = 100;
   home: any
 
-  constructor(public http: HttpClient, private router: Router) {
+  constructor(public http: HttpClient, private router: Router, public productService: ProductService) {
     this.selectedPicture = ""
   }
 

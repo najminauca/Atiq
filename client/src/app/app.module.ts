@@ -9,17 +9,13 @@ import { RegisterComponent } from './components/register/register.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { HomeComponent } from './components/home/home.component';
-import { FormComponent } from './components/form/form.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { ProfileComponent } from './components/profile/profile.component';
-<<<<<<< HEAD
 import { ItemComponent } from './components/item/item.component';
-=======
-import {AuthInterceptor} from "./interceptor/auth.interceptor";
-import {AuthService} from "./services/auth.service";
+import { AuthService } from './services/auth.service';
+import { AuthInterceptor } from './interceptor/auth.interceptor';
 import {FormModule} from "./components/form/form.module";
 import { ProductComponent } from './components/product/product.component';
->>>>>>> 93279d0907ca9b02c5ab8476bcd78a1895c599b8
 
 @NgModule({
   declarations: [
@@ -29,11 +25,8 @@ import { ProductComponent } from './components/product/product.component';
     HomeComponent,
     ChatComponent,
     ProfileComponent,
-<<<<<<< HEAD
-    ItemComponent
-=======
+    ItemComponent,
     ProductComponent
->>>>>>> 93279d0907ca9b02c5ab8476bcd78a1895c599b8
   ],
   imports: [
     BrowserModule,
