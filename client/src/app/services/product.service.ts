@@ -18,9 +18,6 @@ export class ProductService {
  async getProducts(){
     const product: any = await lastValueFrom(this.http.get('http://localhost:3000/product/all'));
     this.productList = product.productList;
-    console.log(this.productList[1]);
-
+    console.log(this.productList[0]);
   }
-
-
 }
