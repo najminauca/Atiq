@@ -40,7 +40,9 @@ export class ProductService {
   ): Promise<ProductListDto> {
     const { search } = searchProductDto;
 
-    const query = this.productRepository.createQueryBuilder('product');
+    const query = this.productRepository
+      .createQueryBuilder('product')
+        .leftJoinAndSelect('product.seller', 'seller');
 
     if (search) {
       // query.andWhere('product.title LIKE :search ', {search : `%${search}%`});
@@ -48,10 +50,9 @@ export class ProductService {
     }
 
     const products: Product[] = await query.getMany();
-    const sellerFromRepo = await this.userRepository.find();
-    const seller = sellerFromRepo.at(0);
 
     const sendProducts: ProductDto[] = products.map((product: Product) => {
+          const seller = product.seller;
           return new ProductDto(
               product.id,
               product.title,
@@ -80,13 +81,13 @@ export class ProductService {
   }
 
   async productById(id: string): Promise<ProductDto> {
-    const product = await this.productRepository.findOne({
-      where: {
-        id: id,
-      },
-    });
-    const sellerFromRepo = await this.userRepository.find();
-    const seller = sellerFromRepo.at(0);
+    const product = await this.productRepository
+      .createQueryBuilder('product')
+      .leftJoinAndSelect('product.seller', 'seller')
+        .where({
+          id: id
+        })
+      .getOne();
 
     return new ProductDto(
         product.id,
@@ -95,11 +96,11 @@ export class ProductService {
         product.price,
         product.priceStatus,
         new UserDto(
-            seller.id,
-            seller.username,
-            seller.firstname,
-            seller.lastname,
-            seller.role
+            product.seller.id,
+            product.seller.username,
+            product.seller.firstname,
+            product.seller.lastname,
+            product.seller.role
         )
     )
   }

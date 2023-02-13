@@ -5,6 +5,7 @@ import {FavProductDto} from "./dto/fav-product.dto";
 import {AuthGuard} from "@nestjs/passport";
 import {GetUser} from "../auth/get-user.decorator";
 import {FavSellerDto} from "./dto/fav-seller.dto";
+import {ProductListDto} from "../product/dto/product-list.dto";
 
 @Controller('favorite')
 @UseGuards(AuthGuard('jwt'))
