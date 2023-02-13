@@ -16,10 +16,12 @@
         <p class="price-input-label">Price</p>
         <span></span>
         <input id="price-input" type="text" [(ngModel)]="price" name="price">
-        <select class="price-input-dropdown-select">
-          <option value="fixed price" (select)="setPriceStatus(false)">fixed price</option>
-          <option value="negotiable" (select)="setPriceStatus(true)">negotiable</option>
-        </select>
+        <div class="" id="radio-price-status">
+          <input type="radio" id="fixed-radio" name="fixed" value="fixed" [(ngModel)]="status">
+          <label for="fixed-radio">Fixed</label>
+          <input type="radio" id="nego-radio" name="nego" value="nego" [(ngModel)]="status">
+          <label for="nego-radio">Negotiable</label>
+        </div>
       </div>
       <div class="price-input-container">
         <p class="picture-input-label">Pictures</p>

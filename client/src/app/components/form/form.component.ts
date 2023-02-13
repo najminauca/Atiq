@@ -1,7 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {lastValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
-import {ActivatedRoute, provideRouter} from "@angular/router";
+import {Router} from "@angular/router";
+import {ProductService} from "../../services/product.service";
 
 @Component({
   selector: 'app-form',
@@ -12,13 +13,13 @@ export class FormComponent implements OnInit {
   public title: string = "";
   public description: string = "";
   public price: number = 0;
-  public status: boolean = false;
+  public status = 'fixed';
   public selectedPicture: string | ArrayBuffer | null;
   width = 200;
   height = 100;
   home: any
 
-  constructor(public http: HttpClient,) {
+  constructor(public http: HttpClient, private router: Router, public productService: ProductService) {
     this.selectedPicture = ""
   }
 
@@ -30,12 +31,9 @@ export class FormComponent implements OnInit {
       title: this.title,
       description: this.description,
       price: this.price,
-      status: this.status
+      priceStatus: this.status
     }));
-  }
-
-  setPriceStatus(bool: boolean) {
-    this.status = bool
+    await this.router.navigateByUrl('/home')
   }
 
   selectPicture(event: any) {

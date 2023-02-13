@@ -1,11 +1,11 @@
-import {Body, Controller, Get, Query} from '@nestjs/common';
+import {Body, Controller, Get, Param, Query} from '@nestjs/common';
 import {SearchProductDto} from "./dto/search-product.dto";
 import {Product} from "./product.entity";
 import {ProductService} from "./product.service";
 import {ProductListDto} from "./dto/product-list.dto";
 import {ProductDto} from "./dto/product.dto";
 
-@Controller('productlist')
+@Controller('product')
 export class ProductListController {
     constructor(private productService: ProductService) {}
 
@@ -16,8 +16,8 @@ export class ProductListController {
         return this.productService.getProducts(searchProductDto);
     }
 
-    @Get('/id')
-    async productById(@Body() id: SearchProductDto): Promise<ProductDto> {
-        return this.productService.productById(id);
+    @Get(':id')
+    async productById(@Param('id') params): Promise<ProductDto> {
+        return this.productService.productById(params);
     }
 }

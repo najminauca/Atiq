@@ -12,6 +12,8 @@ import {FavoriteProduct} from "./favorite-product.entity";
 import {FavProductDto} from "./dto/fav-product.dto";
 import {FavSellerDto} from "./dto/fav-seller.dto";
 import {Product} from "../product/product.entity";
+import {ProductDto} from "../product/dto/product.dto";
+import {UserDto} from "../auth/dto/user.dto";
 
 @Injectable()
 export class FavoriteService {
@@ -46,21 +48,21 @@ export class FavoriteService {
         }
     }
     async deleteFavoriteSeller(seller: FavSellerDto, user: User): Promise<void> {
-        const favSeller = await this.userRepo.findOne({
+        const getSeller = await this.userRepo.findOne({
             where: {
                 id: seller.id
             }
         })
         await this.favoriteSeller.delete({
             user: user,
-            seller: favSeller
-        });
+            seller: getSeller
+        })
     }
 
-    async isFavoriteSeller(seller: FavSellerDto, user: User): Promise<boolean> {
+    async isFavoriteSeller(id: string, user: User): Promise<boolean> {
         const favSeller = await this.userRepo.findOne({
             where: {
-                id: seller.id
+                id: id
             }
         })
         const isFavorite = await this.favoriteSeller.findOne({
@@ -104,10 +106,10 @@ export class FavoriteService {
         });
     }
 
-    async isFavoriteProduct(product: FavProductDto, user: User): Promise<boolean> {
+    async isFavoriteProduct(id: string, user: User): Promise<boolean> {
         const favProduct = await this.productRepo.findOne({
             where: {
-                id: product.id
+                id: id
             }
         })
         const isFavorite = await this.favoriteProduct.findOne({

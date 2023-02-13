@@ -12,13 +12,22 @@
         <li class="nav-item">
           <button class="button_plus" routerLink='/form' (click)="isMenuCollapsed = true">+ Product</button>
         </li>
-        <li class="nav-item active">
-          <!-- Step 4: Close the menu when a link is clicked. -->
-          <a class="nav-link custom-green" routerLink='/login' (click)="isMenuCollapsed = true">Login</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link custom-green" routerLink='/register' (click)="isMenuCollapsed = true">Register</a>
-        </li>
+        <div *ngIf="authService.isLoggedIn">
+          <li class="nav-item">
+            <a class="nav-link custom-green" routerLink='/' (click)="logOut()">Logout</a>
+          </li>
+        </div>
+        <div *ngIf="!authService.isLoggedIn">
+          <li class="nav-item active">
+            <!-- Step 4: Close the menu when a link is clicked. -->
+            <a class="nav-link custom-green" routerLink='/login' (click)="isMenuCollapsed = true">Login</a>
+          </li>
+        </div>
+        <div *ngIf="!authService.isLoggedIn">
+          <li class="nav-item">
+            <a class="nav-link custom-green" routerLink='/register' (click)="isMenuCollapsed = true">Register</a>
+          </li>
+        </div>
         <li class="nav-item">
           <a class="nav-link custom-green" routerLink="/chat" (click)="isMenuCollapsed = true">Chat</a>
         </li>

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, Input, Output} from '@angular/core';
+import {AuthService} from "./services/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-root',
@@ -10,4 +12,12 @@ export class AppComponent {
 
   isMenuCollapsed = true;
 
+  constructor(public authService: AuthService, private route: Router) {
+  }
+
+  logOut() {
+    this.authService.logOut()
+    this.isMenuCollapsed = true
+    window.location.reload()
+  }
 }
