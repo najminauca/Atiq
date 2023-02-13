@@ -12,6 +12,8 @@ import {FavoriteProduct} from "./favorite-product.entity";
 import {FavProductDto} from "./dto/fav-product.dto";
 import {FavSellerDto} from "./dto/fav-seller.dto";
 import {Product} from "../product/product.entity";
+import {ProductDto} from "../product/dto/product.dto";
+import {UserDto} from "../auth/dto/user.dto";
 
 @Injectable()
 export class FavoriteService {

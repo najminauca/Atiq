@@ -16,8 +16,8 @@ export class ProductListController {
         return this.productService.getProducts(searchProductDto);
     }
 
-    @Get('/:id')
-    async productById(@Param('id') id: string): Promise<ProductDto> {
-        return this.productService.productById(id);
+    @Get(':id')
+    async productById(@Param('id') params): Promise<ProductDto> {
+        return this.productService.productById(params);
     }
 }
