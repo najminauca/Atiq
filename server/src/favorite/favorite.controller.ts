@@ -22,9 +22,9 @@ export class FavoriteController {
         return await this.favoriteService.deleteFavoriteSeller(seller, user);
     }
 
-    @Get('/isfavseller')
-    async isFavoriteSeller(@Body() seller: FavSellerDto, @GetUser() user: User): Promise<boolean> {
-        return this.favoriteService.isFavoriteSeller(seller, user);
+    @Get('/isfavseller/:id')
+    async isFavoriteSeller(@Param('id') param, @GetUser() user: User): Promise<boolean> {
+        return this.favoriteService.isFavoriteSeller(param, user);
     }
 
 
@@ -38,8 +38,8 @@ export class FavoriteController {
         return this.favoriteService.deleteFavoriteProduct(product, user);
     }
 
-    @Get('/isfavproduct')
-    async isFavoriteProduct(@Body() product: FavProductDto, @GetUser() user: User): Promise<boolean> {
-        return this.favoriteService.isFavoriteProduct(product, user);
+    @Get('/isfavproduct/:id')
+    async isFavoriteProduct(@Param('id') param, @GetUser() user: User): Promise<boolean> {
+        return this.favoriteService.isFavoriteProduct(param, user);
     }
 }
