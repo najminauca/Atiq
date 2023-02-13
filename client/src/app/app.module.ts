@@ -12,6 +12,7 @@ import { HomeComponent } from './components/home/home.component';
 import { FormComponent } from './components/form/form.component';
 import { ChatComponent } from './components/chat/chat.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { ItemComponent } from './components/item/item.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ProfileComponent } from './components/profile/profile.component';
     HomeComponent,
     FormComponent,
     ChatComponent,
-    ProfileComponent
+    ProfileComponent,
+    ItemComponent
   ],
   imports: [
     BrowserModule,
