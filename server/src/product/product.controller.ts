@@ -2,7 +2,7 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
+  Get, Header,
   Param,
   Post,
   Query,
@@ -29,7 +29,7 @@ export class ProductController {
   async createProduct(
     @Body() createProductDto: CreateProductDto,
     @GetUser() seller: User,
-  ) {
+  ): Promise<SearchProductDto> {
     return this.productService.createProduct(createProductDto, seller);
   }
 
