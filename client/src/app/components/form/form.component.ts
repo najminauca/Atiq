@@ -30,7 +30,7 @@ export class FormComponent implements OnInit {
       title: this.title,
       description: this.description,
       price: this.price,
-      status: this.status
+      priceStatus: this.status
     }));
     await this.router.navigateByUrl('/home')
   }

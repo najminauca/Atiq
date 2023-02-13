@@ -117,4 +117,27 @@ span {
   background: #EAE7B1;
 }
 
+.example-radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+  align-items: flex-start;
+}
+
+.example-radio-button {
+  margin: 5px;
+}
+
+#radio-price-status {
+  border: solid #61876E 1px;
+  height: 30px;
+  width: 190px;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 17px;
+  background: #EAE7B1;
+  display: flex;
+  justify-content: space-evenly;
+}
+
 

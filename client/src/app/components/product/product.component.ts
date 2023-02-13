@@ -21,7 +21,6 @@ export class ProductComponent implements OnInit {
 
   async getProductData(): Promise<void> {
     this.productId = this.activatedRoute.snapshot.paramMap.get('productId')
-    console.log(this.productId)
     try {
       const data: any = await lastValueFrom(this.http.get("http://localhost:3000/product/" + this.productId));
       this.productData = data

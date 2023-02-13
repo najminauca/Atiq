@@ -25,11 +25,11 @@ export class ProductService {
     const { title, description, price, priceStatus } = createProductDto;
 
     const product = this.productRepository.create({
-      title: title,
-      description: description,
-      price: price,
-      priceStatus: priceStatus,
-      seller: seller,
+      title,
+      description,
+      price,
+      priceStatus,
+      seller,
     });
 
     await this.productRepository.save(product);
