@@ -15,7 +15,7 @@ export class AuthService {
       password
     }));
     console.log(accessToken);
-    localStorage.setItem('user', username)
+    localStorage.setItem('username', username)
     localStorage.setItem('role', accessToken.user)
     localStorage.setItem('accessToken', accessToken.jwt);
   }
@@ -33,11 +33,17 @@ export class AuthService {
     return localStorage.getItem('accessToken');
   }
 
+  public isSeller(): boolean {
+    return localStorage.getItem('role') == 'seller'
+  }
+
   public isLoggedIn() {
     return this.getToken() != null
   }
 
   public logOut() {
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
     localStorage.removeItem('accessToken');
   }
 }

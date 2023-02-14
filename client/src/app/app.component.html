@@ -9,9 +9,11 @@
     <!-- Step 2: Add the ngbCollapse directive to the element below. -->
     <div [ngbCollapse]="isMenuCollapsed" class="collapse navbar-collapse">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <button class="button_plus" routerLink='/form' (click)="isMenuCollapsed = true">+ Product</button>
-        </li>
+        <div *ngIf="authService.isLoggedIn() && authService.isSeller()">
+          <li class="nav-item">
+            <button class="button_plus" routerLink='/form' (click)="isMenuCollapsed = true">+ Product</button>
+          </li>
+        </div>
         <div *ngIf="authService.isLoggedIn()">
           <li class="nav-item">
             <a class="nav-link custom-green" routerLink='/' (click)="logOut()">Logout</a>
