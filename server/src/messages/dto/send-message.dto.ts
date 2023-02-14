@@ -4,12 +4,15 @@ import {User} from "../../auth/user.entity";
 import {UserDto} from "../../auth/dto/user.dto";
 
 export class SendMessageDto {
-    sender: string
+    sender: UserDto
 
     message: string
 
-    constructor(sender: string, message: string) {
+    createdAt: Date
+
+    constructor(sender: UserDto, message: string, createdAt: Date) {
         this.sender = sender;
-        this.message = message
+        this.message = message;
+        this.createdAt = createdAt
     }
 }

@@ -16,11 +16,11 @@ export class ChatRoom {
     @OneToMany(() => Message, (message) => message.room, {eager: true})
     messages: Message[];
 
-    @ManyToOne(() => User, (user) => user.roomConnection1, {eager:false})
+    @ManyToOne(() => User, (user) => user.asBuyer, {eager:false})
     @JoinColumn()
-    user1: User;
+    buyer: User;
 
-    @ManyToOne(() => User, (user) => user.roomConnection2, {eager:false})
+    @ManyToOne(() => User, (user) => user.asSeller, {eager:false})
     @JoinColumn()
-    user2: User
+    seller: User
 }

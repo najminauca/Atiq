@@ -18,6 +18,7 @@ export class AuthService {
     localStorage.setItem('username', username)
     localStorage.setItem('role', accessToken.user)
     localStorage.setItem('accessToken', accessToken.jwt);
+    localStorage.setItem('id', accessToken.id)
   }
 
   async signup(username: string, firstname: string, lastname: string, password: string){
@@ -45,5 +46,6 @@ export class AuthService {
     localStorage.removeItem('username');
     localStorage.removeItem('role');
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('id');
   }
 }

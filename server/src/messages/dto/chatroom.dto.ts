@@ -1,14 +1,15 @@
+import {UserDto} from "../../auth/dto/user.dto";
 
 export class ChatRoomDto {
     id: string;
 
-    user1: string;
+    buyer: UserDto;
 
-    user2: string;
+    seller: UserDto;
 
-    constructor(id: string, user1: string, user2: string) {
+    constructor(id: string, user1: UserDto, user2: UserDto) {
         this.id = id;
-        this.user1 = user1;
-        this.user2 = user2;
+        this.buyer = user1;
+        this.seller = user2;
     }
 }
