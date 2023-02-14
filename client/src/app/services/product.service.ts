@@ -12,12 +12,23 @@ export class ProductService {
   havenoidea: any;
 
   constructor(private http: HttpClient) {
-    this.getProducts();
   }
 
- async getProducts(){
-    const product: any = await lastValueFrom(this.http.get('http://localhost:3000/product/all'));
-    this.productList = product.productList;
-    console.log(this.productList[0]);
+  async getProducts(){
+      const product: any = await lastValueFrom(this.http.get('http://localhost:3000/product/all'));
+      this.productList = product.productList;
+      return this.productList
+  }
+
+  async getFavProducts(){
+    const product: any = await lastValueFrom(this.http.get('http://localhost:3000/favorite/productlist'));
+    this.productList = product.productList
+    return this.productList
+  }
+
+  async getFavSellerProducts(){
+    const product: any = await lastValueFrom(this.http.get('http://localhost:3000/favorite/favsellerproductlist'));
+    this.productList = product.productList
+    return this.productList
   }
 }

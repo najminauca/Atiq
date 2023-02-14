@@ -6,23 +6,18 @@ import {lastValueFrom} from "rxjs";
   providedIn: 'root'
 })
 export class AuthService {
-  isLoggedIn: boolean = false;
 
   constructor(private http: HttpClient) { }
 
   async login(username: string, password: string){
-    try{
-      const accessToken = await lastValueFrom(this.http.post<any>('http://localhost:3000/auth/login', {
-        username,
-        password
-      }));
-      console.log(accessToken);
-      localStorage.setItem('user', username)
-      localStorage.setItem('accessToken', accessToken.jwt);
-      this.isLoggedIn = true
-    } catch(e) {
-      console.log(e)
-    }
+    const accessToken = await lastValueFrom(this.http.post<any>('http://localhost:3000/auth/login', {
+      username,
+      password
+    }));
+    console.log(accessToken);
+    localStorage.setItem('username', username)
+    localStorage.setItem('role', accessToken.user)
+    localStorage.setItem('accessToken', accessToken.jwt);
   }
 
   async signup(username: string, firstname: string, lastname: string, password: string){
@@ -38,8 +33,17 @@ export class AuthService {
     return localStorage.getItem('accessToken');
   }
 
+  public isSeller(): boolean {
+    return localStorage.getItem('role') == 'seller'
+  }
+
+  public isLoggedIn() {
+    return this.getToken() != null
+  }
+
   public logOut() {
+    localStorage.removeItem('username');
+    localStorage.removeItem('role');
     localStorage.removeItem('accessToken');
-    this.isLoggedIn = false;
   }
 }

@@ -57,7 +57,7 @@ export class AuthService {
 
       const jwt = this.jwtService.sign(payload);
 
-      return { jwt };
+      return { jwt, user: user.role };
     } else {
       throw new NotFoundException('Wrong user information');
     }
