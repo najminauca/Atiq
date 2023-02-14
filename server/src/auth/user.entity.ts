@@ -3,6 +3,8 @@ import { Product } from '../product/product.entity';
 import {IsOptional} from "class-validator";
 import {FavoriteProduct} from "../favorite/favorite-product.entity";
 import {FavoriteSeller} from "../favorite/favorite-seller.entity";
+import {ChatRoom} from "../messages/entities/chat-room.entity";
+import {Message} from "../messages/entities/message.entity";
 
 @Entity()
 export class User {
@@ -35,4 +37,13 @@ export class User {
 
   @OneToMany(() => FavoriteSeller, (favSeller) => favSeller.seller, {eager: true})
   followedUser: User[];
+
+  @OneToMany(() => Message, (message) => message.sender, {eager: true} )
+  messages: Message[];
+
+  @OneToMany(() => ChatRoom, (connection) => connection.user1, { eager: true })
+  roomConnection1: ChatRoom[];
+
+  @OneToMany(() => ChatRoom, (connection) => connection.user2, { eager: true })
+  roomConnection2: ChatRoom[];
 }

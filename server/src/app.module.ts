@@ -6,15 +6,14 @@ import { AuthModule } from './auth/auth.module';
 import { ProductModule } from './product/product.module';
 import { Product } from './product/product.entity';
 import { User } from './auth/user.entity';
-import { ProductController } from './product/product.controller';
 import {FavoriteProduct} from "./favorite/favorite-product.entity";
 import {FavoriteSeller} from "./favorite/favorite-seller.entity";
 import {FavoriteModule} from "./favorite/favorite.module";
-import { ChatModule } from './chat/chat.module';
-import {ChatRoom} from "./chat/chat-room.entity";
-import {Chat} from "./chat/chat.entity";
 import {PicturesEntity} from "./picture/picture.entity";
 import {PictureModule} from "./picture/picture.module";
+import {ChatRoom} from "./messages/entities/chat-room.entity";
+import { MessagesModule } from './messages/messages.module';
+import {Message} from "./messages/entities/message.entity";
 
 @Module({
   imports: [
@@ -26,7 +25,7 @@ import {PictureModule} from "./picture/picture.module";
         Product,
         FavoriteProduct,
         FavoriteSeller,
-        Chat,
+        Message,
         ChatRoom,
         PicturesEntity,
       ],
@@ -36,8 +35,8 @@ import {PictureModule} from "./picture/picture.module";
     AuthModule,
     ProductModule,
     FavoriteModule,
-    ChatModule,
     PictureModule,
+    MessagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
