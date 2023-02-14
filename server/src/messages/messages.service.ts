@@ -7,6 +7,7 @@ import {ChatRoomDto} from "./dto/chatroom.dto";
 import {SendMessageDto} from "./dto/send-message.dto";
 import {CreateMessageDto} from "./dto/create-message.dto";
 import {Message} from "./entities/message.entity";
+import {UserDto} from "../auth/dto/user.dto";
 
 @Injectable()
 export class MessagesService {
@@ -18,11 +19,15 @@ export class MessagesService {
 
   async createMessage(
     messageDto: CreateMessageDto,
-    sender: User,
   ): Promise<Message> {
     const room = await this.chatRoomRepository.findOne({
       where: {
         id: messageDto.room,
+      },
+    });
+    const sender = await this.userRepo.findOne({
+      where: {
+        id: messageDto.sender,
       },
     });
     const message = await this.messageRepo.create({
@@ -34,70 +39,91 @@ export class MessagesService {
     return await this.messageRepo.save(message);
   }
 
-  async openRoom(room: ChatRoomDto): Promise<ChatRoom> {
-    const user1 = await this.userRepo.findOne({
+  async openRoom(buyerId: string, sellerId: string): Promise<ChatRoomDto> {
+    const buyer = await this.userRepo.findOne({
       where: {
-        id: room.user1,
+        id: buyerId,
       },
     });
-    const user2 = await this.userRepo.findOne({
+    const seller = await this.userRepo.findOne({
       where: {
-        id: room.user2,
+        id: sellerId,
       },
     });
-    const findRoom = await this.chatRoomRepository.createQueryBuilder('room')
-        .leftJoinAndSelect('room.user1', 'user1')
-        .leftJoinAndSelect('room.user2', 'user2')
-        .where({
-          user1: user1,
-          user2: user2,
-        }).orWhere({
-          user1: user2,
-          user2: user1,
-        }).getOne()
-    if (findRoom == null) {
-      const newRoom = await this.chatRoomRepository.create({
-        user1: user1,
-        user2: user2,
-      });
-      await this.chatRoomRepository.save(newRoom);
-      return newRoom;
-    }
-    return findRoom;
+    const newRoom = await this.chatRoomRepository.create({
+      buyer: buyer,
+      seller: seller,
+    });
+    await this.chatRoomRepository.save(newRoom);
+
+    return newRoom;
   }
 
-  async getMessages(room: ChatRoomDto): Promise<SendMessageDto[]> {
-    const chatRoom = await this.chatRoomRepository.findOne({
+  async getMessages(id: string): Promise<SendMessageDto[]> {
+    const room = await this.chatRoomRepository.findOne({
       where: {
-        id: room.id,
+        id: id,
       },
     });
     const messages: Message[] = await this.messageRepo
       .createQueryBuilder('message')
         .leftJoinAndSelect('message.sender', 'sender')
         .where({
-          room: chatRoom
+          room: room
         }).orderBy('message.createdAt', 'ASC').getMany()
     const messagesDto: SendMessageDto[] = messages.map((message) => {
       const sender = message.sender;
-      return new SendMessageDto(sender.id, message.text);
+      return new SendMessageDto(
+        new UserDto(
+            sender.id,
+            sender.username,
+            sender.firstname,
+            sender.lastname,
+            sender.role
+        ),
+        message.text,
+        message.createdAt,
+      );
     });
     return messagesDto;
   }
 
-  async getAllChatRoom(user: User): Promise<ChatRoomDto[]> {
+  async getAllChatRoom(id: string): Promise<ChatRoomDto[]> {
+    const user = this.userRepo.findOne({
+      where: {
+        id: id,
+      },
+    });
     const rooms: ChatRoom[] = await this.chatRoomRepository
       .createQueryBuilder('rooms')
-        .leftJoinAndSelect('rooms.user1', 'user1')
-        .leftJoinAndSelect('rooms.user2', 'user2')
+        .leftJoinAndSelect('rooms.buyer', 'buyer')
+        .leftJoinAndSelect('rooms.seller', 'seller')
         .where({
-          user1: user
+          buyer: user
         }).orWhere({
-          user2: user
+          seller: user
         }).getMany()
 
     const roomDto: ChatRoomDto[] = rooms.map((room) => {
-      return new ChatRoomDto(room.id, room.user1.id, room.user2.id);
+      const buyer = room.buyer;
+      const seller = room.seller;
+      return new ChatRoomDto(
+          room.id,
+          new UserDto(
+              buyer.id,
+              buyer.username,
+              buyer.firstname,
+              buyer.lastname,
+              buyer.role
+          ),
+          new UserDto(
+              seller.id,
+              seller.username,
+              seller.firstname,
+              seller.lastname,
+              seller.role
+          ),
+      );
     });
 
     return roomDto;

@@ -38,12 +38,12 @@ export class User {
   @OneToMany(() => FavoriteSeller, (favSeller) => favSeller.seller, {eager: true})
   followedUser: User[];
 
-  @OneToMany(() => Message, (message) => message.sender, {eager: true} )
+  @OneToMany(() => Message, (message) => message.sender, { eager: true } )
   messages: Message[];
 
-  @OneToMany(() => ChatRoom, (connection) => connection.user1, { eager: true })
-  roomConnection1: ChatRoom[];
+  @OneToMany(() => ChatRoom, (connection) => connection.buyer, { eager: true })
+  asBuyer: ChatRoom[];
 
-  @OneToMany(() => ChatRoom, (connection) => connection.user2, { eager: true })
-  roomConnection2: ChatRoom[];
+  @OneToMany(() => ChatRoom, (connection) => connection.seller, { eager: true })
+  asSeller: ChatRoom[];
 }

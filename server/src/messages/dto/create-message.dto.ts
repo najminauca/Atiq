@@ -9,8 +9,13 @@ export class CreateMessageDto {
     @IsNotEmpty()
     message: string
 
-    constructor(room: string, message: string) {
+    @IsString()
+    @IsNotEmpty()
+    sender: string
+
+    constructor(room: string, message: string, sender: string) {
         this.room = room;
-        this.message = message
+        this.message = message;
+        this.sender = sender;
     }
 }

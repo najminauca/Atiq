@@ -1,4 +1,4 @@
-import { WebSocketGateway, SubscribeMessage, MessageBody } from '@nestjs/websockets';
+import {WebSocketGateway, SubscribeMessage, MessageBody, WebSocketServer} from '@nestjs/websockets';
 import { MessagesService } from './messages.service';
 import {Server, Socket} from "socket.io";
 import {GetUser} from "../auth/get-user.decorator";
@@ -8,6 +8,7 @@ import {ChatRoomDto} from "./dto/chatroom.dto";
 import {SendMessageDto} from "./dto/send-message.dto";
 import {Message} from "./entities/message.entity";
 import {CreateMessageDto} from "./dto/create-message.dto";
+import {AuthService} from "../auth/auth.service";
 
 @WebSocketGateway({
   cors: {
@@ -15,44 +16,30 @@ import {CreateMessageDto} from "./dto/create-message.dto";
   },
 })
 export class MessagesGateway {
+  @WebSocketServer()
+  server: Server;
+
   constructor(private readonly messagesService: MessagesService) {}
   @SubscribeMessage('sendMessage')
-  async handleSendMessage(
-    client: Socket,
+  async createMessage(
     @MessageBody() message: CreateMessageDto,
-    @GetUser() user: User,
   ): Promise<Message> {
-    //this.server.emit('message', message);
-    return this.messagesService.createMessage(message, user);
+    this.server.emit('message', message.room);
+    return this.messagesService.createMessage(message);
   }
 
   @SubscribeMessage('openRoom')
-  async openRoom(@Body() room: ChatRoomDto) {
-    return this.messagesService.openRoom(room);
+  async openRoom(@MessageBody() buyerId: string, sellerId: string): Promise<ChatRoomDto> {
+    return this.messagesService.openRoom(buyerId, sellerId);
   }
 
   @SubscribeMessage('getAllChatroom')
-  async getAllChatRoom(@GetUser() user: User): Promise<ChatRoomDto[]> {
-    return this.messagesService.getAllChatRoom(user);
+  async getAllChatRoom(@MessageBody() id: string): Promise<ChatRoomDto[]> {
+    return this.messagesService.getAllChatRoom(id);
   }
 
   @SubscribeMessage('getAllMessage')
-  async getAllMessage(@Body() room: ChatRoomDto): Promise<SendMessageDto[]> {
-    return this.messagesService.getMessages(room);
-  }
-
-  afterInit(server: Server) {
-    console.log(server);
-    //Do stuffs
-  }
-
-  handleDisconnect(client: Socket) {
-    console.log(`Disconnected: ${client.id}`);
-    //Do stuffs
-  }
-
-  handleConnection(client: Socket, ...args: any[]) {
-    console.log(`Connected ${client.id}`);
-    //Do stuffs
+  async getAllMessage(@MessageBody() id: string): Promise<SendMessageDto[]> {
+    return this.messagesService.getMessages(id);
   }
 }
