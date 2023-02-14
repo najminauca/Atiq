@@ -6,7 +6,6 @@ import {lastValueFrom} from "rxjs";
   providedIn: 'root'
 })
 export class AuthService {
-  isLoggedIn: boolean = false;
 
   constructor(private http: HttpClient) { }
 
@@ -17,8 +16,8 @@ export class AuthService {
     }));
     console.log(accessToken);
     localStorage.setItem('user', username)
+    localStorage.setItem('role', accessToken.user)
     localStorage.setItem('accessToken', accessToken.jwt);
-    this.isLoggedIn = true
   }
 
   async signup(username: string, firstname: string, lastname: string, password: string){
@@ -34,8 +33,11 @@ export class AuthService {
     return localStorage.getItem('accessToken');
   }
 
+  public isLoggedIn() {
+    return this.getToken() != null
+  }
+
   public logOut() {
     localStorage.removeItem('accessToken');
-    this.isLoggedIn = false;
   }
 }

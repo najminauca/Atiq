@@ -15,7 +15,7 @@ export class ItemComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.product)
-    if(this.authService.isLoggedIn) {
+    if(this.authService.isLoggedIn()) {
       this.updateProductBool()
     }
   }
