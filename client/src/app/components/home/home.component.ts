@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Product} from "../../objects/Product";
-import {lastValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {ProductService} from "../../services/product.service";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-home',
@@ -14,8 +14,10 @@ export class HomeComponent implements OnInit {
   @Input() searchResults: string[];
   @Input() searchClicked: boolean;
   @Input() heartClicked: boolean;
+  productList: Product[] = [];
+  filter: string = 'All'
 
-  constructor(public http: HttpClient, public productService: ProductService) {
+  constructor(public http: HttpClient, public productService: ProductService, public authService: AuthService) {
     this.searchInput = "";
     this.searchResults = [];
     this.searchClicked = false;
@@ -29,7 +31,15 @@ export class HomeComponent implements OnInit {
   }
 
   async updateProducts() {
-    await this.productService.getProducts()
+    if(this.filter == "All") {
+      this.productList = await this.productService.getProducts()
+    }
+    if(this.filter == "Favorite Products") {
+      this.productList = await this.productService.getFavProducts()
+    }
+    if(this.filter == "Favorite Sellers") {
+      this.productList = await this.productService.getFavSellerProducts()
+    }
   }
 
   onSearch() {
@@ -44,4 +54,8 @@ export class HomeComponent implements OnInit {
     this.heartClicked = !this.heartClicked;
   }
 
+  setFilter(filter: string) {
+    this.filter = filter
+    this.updateProducts()
+  }
 }

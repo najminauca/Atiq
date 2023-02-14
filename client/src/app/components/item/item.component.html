@@ -3,7 +3,7 @@
 
 <a>
   <div class="card " style="width: 18rem;">
-    <div class="like-btn ">
+    <div class="like-btn " *ngIf="authService.isLoggedIn()">
       <button class="btn btn-lg float-end" (click)="onLike()" id="heart">
         <ng-container *ngIf="isProductLiked; then heartIsClicked; else heartIsNotClicked"></ng-container>
       </button>
