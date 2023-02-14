@@ -14,6 +14,8 @@ import {FavSellerDto} from "./dto/fav-seller.dto";
 import {Product} from "../product/product.entity";
 import {ProductDto} from "../product/dto/product.dto";
 import {UserDto} from "../auth/dto/user.dto";
+import {ProductListDto} from "../product/dto/product-list.dto";
+import {ProductListController} from "../product/product-list.controller";
 
 @Injectable()
 export class FavoriteService {
@@ -75,6 +77,43 @@ export class FavoriteService {
         return isFavorite != null
     }
 
+    async getFavSellerProductList(user: User): Promise<ProductListDto> {
+        const query = this.favoriteSeller
+            .createQueryBuilder('favSeller')
+            .leftJoinAndSelect('favSeller.user', 'user')
+            .leftJoinAndSelect('favSeller.seller', 'seller')
+            .leftJoinAndSelect('seller.product', 'product')
+            .leftJoinAndSelect('product.seller', 'productseller')
+            .where({
+                user: user
+            });
+
+        const sellers: FavoriteSeller[] = await query.getMany();
+
+        const products: Product[] = sellers.flatMap((fav: FavoriteSeller) => fav.seller.product)
+
+        const sendProducts: ProductDto[] = products.map((fav: Product) => {
+                const seller = fav.seller;
+                return new ProductDto(
+                    fav.id,
+                    fav.title,
+                    fav.description,
+                    fav.price,
+                    fav.priceStatus,
+                    new UserDto(
+                        seller.id,
+                        seller.username,
+                        seller.firstname,
+                        seller.lastname,
+                        seller.role
+                    )
+                );
+            }
+        )
+
+        return new ProductListDto(sendProducts);
+    }
+
     async addFavoriteProduct(product: FavProductDto, user: User): Promise<void> {
         const favProduct = await this.productRepo.findOne({
             where: {
@@ -120,5 +159,40 @@ export class FavoriteService {
         })
 
         return isFavorite != null
+    }
+
+    async getFavProductList(user: User) {
+        const query = this.favoriteProduct
+            .createQueryBuilder('favProduct')
+            .leftJoinAndSelect('favProduct.user', 'user')
+            .leftJoinAndSelect('favProduct.product', 'product')
+            .leftJoinAndSelect('product.seller', 'seller')
+            .where({
+                user: user
+            });
+
+        const products: FavoriteProduct[] = await query.getMany();
+
+        const sendProducts: ProductDto[] = products.map((fav: FavoriteProduct) => {
+                const favProduct = fav.product
+                const seller = favProduct.seller;
+                return new ProductDto(
+                    favProduct.id,
+                    favProduct.title,
+                    favProduct.description,
+                    favProduct.price,
+                    favProduct.priceStatus,
+                    new UserDto(
+                        seller.id,
+                        seller.username,
+                        seller.firstname,
+                        seller.lastname,
+                        seller.role
+                    )
+                );
+            }
+        )
+
+        return new ProductListDto(sendProducts);
     }
 }

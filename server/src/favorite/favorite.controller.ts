@@ -6,6 +6,8 @@ import {AuthGuard} from "@nestjs/passport";
 import {GetUser} from "../auth/get-user.decorator";
 import {FavSellerDto} from "./dto/fav-seller.dto";
 import {ProductListDto} from "../product/dto/product-list.dto";
+import {Product} from "../product/product.entity";
+import {ProductListController} from "../product/product-list.controller";
 
 @Controller('favorite')
 @UseGuards(AuthGuard('jwt'))
@@ -27,6 +29,11 @@ export class FavoriteController {
         return this.favoriteService.isFavoriteSeller(param, user);
     }
 
+    @Get('/favsellerproductlist')
+    async favSellerProductList(@GetUser() user: User): Promise<ProductListDto> {
+        return this.favoriteService.getFavSellerProductList(user);
+    }
+
 
     @Post('/addfavproduct')
     async addFavoriteProduct(@Body() product: FavProductDto, @GetUser() user: User): Promise<void> {
@@ -41,5 +48,10 @@ export class FavoriteController {
     @Get('/isfavproduct/:id')
     async isFavoriteProduct(@Param('id') param, @GetUser() user: User): Promise<boolean> {
         return this.favoriteService.isFavoriteProduct(param, user);
+    }
+
+    @Get('/productlist')
+    async getFavProductList(@GetUser() user: User): Promise<ProductListDto> {
+        return this.favoriteService.getFavProductList(user);
     }
 }
