@@ -8,6 +8,7 @@ import { NgIf } from '@angular/common';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import {Picture} from "../../objects/picture";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-product',
@@ -17,10 +18,17 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 export class ProductComponent implements OnInit {
   productData: Product | undefined;
   productId: string | null = "";
-
+  isSellerLiked?: boolean;
   imageUrl: Array<SafeUrl | undefined> = []
 
-  constructor(private activatedRoute: ActivatedRoute, public http: HttpClient, private router: Router,config: NgbCarouselConfig, private sanitizer: DomSanitizer) {
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    public http: HttpClient,
+    private router: Router,
+    config: NgbCarouselConfig,
+    private sanitizer: DomSanitizer,
+    public authService: AuthService
+  ) {
     config.interval = 10000;
     config.wrap = false;
     config.keyboard = false;
@@ -40,6 +48,9 @@ export class ProductComponent implements OnInit {
     } catch(e) {
       console.log(e)
     }
+    if(this.authService.isLoggedIn()) {
+      this.updateSellerBool()
+    }
   }
 
   async getPic(){
@@ -55,5 +66,32 @@ export class ProductComponent implements OnInit {
         this.imageUrl.push(this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl));
       });
     })
+  }
+
+  async onLike() {
+    if(this.isSellerLiked) {
+      await lastValueFrom(this.http.delete('http://localhost:3000/favorite/delfavseller', {
+        body: {
+          id: this.productData?.seller.id
+        }
+      }));
+    } else {
+      await lastValueFrom(this.http.post('http://localhost:3000/favorite/addfavseller',
+        {
+          id: this.productData?.seller.id
+        }));
+    }
+    await this.updateSellerBool()
+  }
+
+  async updateSellerBool() {
+    console.log(this.productData?.seller.id)
+    try {
+      const bool: any = await lastValueFrom(this.http.get('http://localhost:3000/favorite/isfavseller/' + this.productData!!.seller.id));
+      this.isSellerLiked = bool
+    } catch(e) {
+      console.log(e)
+    }
+    console.log(this.isSellerLiked)
   }
 }

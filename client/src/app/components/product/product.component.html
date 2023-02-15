@@ -1,9 +1,7 @@
 
-<!--<div *ngIf="productData != null">-->
-<!--  <p>{{productData.title}}</p>-->
-<!--  <p>{{productData.description}}</p>-->
-<!--</div>-->
-<div class="mt-5" *ngIf="productData != null">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+<div class="" *ngIf="productData != null">
   <div>
     <ngb-carousel *ngIf="imageUrl" class="product-page">
       <ng-template ngbSlide *ngFor="let img of imageUrl">
@@ -13,7 +11,6 @@
           </div>
         </div>
       </ng-template>
-
     </ngb-carousel>
   </div>
 
@@ -33,10 +30,22 @@
 <!--      </div>-->
 
     <p class="fw-bold mb-4">{{productData.price}}$       {{productData.priceStatus }}</p>
+    <p>{{productData.seller.id}}</p>
+    <p>{{productData.seller.username}}</p>
 
+    <button class="btn  btn-lg text-white mb-4" >Contact Seller</button>
+    <div class="like-btn " *ngIf="authService.isLoggedIn()">
+      <button class="btn btn-lg float-end" (click)="onLike()" id="heart">
+        <ng-container *ngIf="isSellerLiked; then heartIsClicked; else heartIsNotClicked"></ng-container>
+      </button>
+      <ng-template #heartIsClicked>
+        <i class="fa fa-heart" style="color: #D0312D"></i>
+      </ng-template>
+      <ng-template #heartIsNotClicked>
+        <i class="fa fa-heart-o"></i>
+      </ng-template>
 
-
-    <button class="btn  btn-lg text-white mb-4">Buy</button>
+    </div>
   </div>
 
 </div>
