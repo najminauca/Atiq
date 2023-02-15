@@ -4,10 +4,10 @@
 </head>
 
 <div class="home-page">
-  <div class="float-start mt-3 mb-3">
+  <div class="float-start mt-5 mb-3 ms-2">
     <div *ngIf="authService.isLoggedIn()">
-      <div ngbDropdown class="d-inline-block">
-        <button type="button" class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+      <div ngbDropdown class="d-inline-block ">
+        <button type="button" class="btn btn-light" id="dropdownBasic1" ngbDropdownToggle>
           {{filter}}
         </button>
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1" [(ngModel)]="filter">
@@ -18,9 +18,9 @@
       </div>
     </div>
   </div>
-  <div class="container">
+  <div class="container ">
     <div class="row mt-5">
-      <div class="col-lg-3 col-md-6 col-sm-12 " *ngFor="let product of productList">
+      <div class="col-lg-3 col-md-6 col-sm-12 mt-4" *ngFor="let product of productList">
         <app-item [product]="product"></app-item>
       </div>
     </div>
