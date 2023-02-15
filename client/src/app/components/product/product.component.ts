@@ -7,6 +7,7 @@ import {HttpClient, HttpParams} from "@angular/common/http";
 import { NgIf } from '@angular/common';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import {Picture} from "../../objects/picture";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-product',
@@ -17,19 +18,15 @@ export class ProductComponent implements OnInit {
   productData: Product | undefined;
   productId: string | null = "";
 
-  imagePath: Picture[] = [];
-  picts : File[] = [];
+  imageUrl: Array<SafeUrl | undefined> = []
 
-  // images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
-
-
-
-  constructor(private activatedRoute: ActivatedRoute, public http: HttpClient, private router: Router,config: NgbCarouselConfig) {
+  constructor(private activatedRoute: ActivatedRoute, public http: HttpClient, private router: Router,config: NgbCarouselConfig, private sanitizer: DomSanitizer) {
     config.interval = 10000;
     config.wrap = false;
     config.keyboard = false;
     config.pauseOnHover = false;
     this.getProductData()
+    this.getPic()
   }
 
   async ngOnInit(): Promise<void> {
@@ -45,20 +42,18 @@ export class ProductComponent implements OnInit {
     }
   }
 
-
   async getPic(){
    const data: any = await lastValueFrom(this.http.get("http://localhost:3000/picture/get-pictures/"+ this.productId));
-   this.imagePath = data;
+   const imagePath: Picture[] = data;
 
-   const data1: any = this.imagePath.map(async (pic: Picture) => {
-     return await lastValueFrom(this.http.get("http://localhost:3000/picture/get-image/" + pic.picture));
-   })
-
-    this.picts = data1;
-   const reader =  new FileReader;
-
-
-
+    imagePath.map(async (pic: Picture) => {
+      this.http.get("http://localhost:3000/picture/get-image/" + pic.picture, {
+        responseType: 'blob'
+      }).subscribe(data =>{
+        console.log(data);
+        const unsafeImageUrl = URL.createObjectURL(data);
+        this.imageUrl.push(this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl));
+      });
+    })
   }
-
 }

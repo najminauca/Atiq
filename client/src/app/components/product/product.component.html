@@ -5,12 +5,11 @@
 <!--</div>-->
 
 <div class=" mt-5" *ngIf="productData != null">
-
   <div>
-    <ngb-carousel *ngIf="images" class="">
-      <ng-template ngbSlide *ngFor="let img of images, let i=index">
-        <div class="picsum-img-wrapper" >
-          <img [src]="images[i]" alt="Random first slide" />
+    <ngb-carousel *ngIf="imageUrl" class="">
+      <ng-template ngbSlide *ngFor="let img of imageUrl">
+        <div class="picsum-img-wrapper"  >
+          <img [src]="img" alt="Random first slide" />
         </div>
       </ng-template>
 
