@@ -3,21 +3,19 @@
 <!--  <p>{{productData.title}}</p>-->
 <!--  <p>{{productData.description}}</p>-->
 <!--</div>-->
-
-<div class=" mt-5" *ngIf="productData != null">
+<div class="mt-5" *ngIf="productData != null">
   <div>
-    <ngb-carousel *ngIf="imageUrl" class="">
+    <ngb-carousel *ngIf="imageUrl" class="product-page">
       <ng-template ngbSlide *ngFor="let img of imageUrl">
-        <div class="picsum-img-wrapper"  >
-          <img [src]="img" alt="Random first slide" />
+        <div class="picsum-img-wrapper d-flex justify-content-center"  >
+          <div class="crop-image d-flex justify-content-center">
+            <img [src]="img" alt="Random first slide" />
+          </div>
         </div>
       </ng-template>
 
     </ngb-carousel>
   </div>
-
-
-
 
   <div>
 
