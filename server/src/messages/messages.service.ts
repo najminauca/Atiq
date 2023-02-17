@@ -8,6 +8,7 @@ import {SendMessageDto} from "./dto/send-message.dto";
 import {CreateMessageDto} from "./dto/create-message.dto";
 import {Message} from "./entities/message.entity";
 import {UserDto} from "../auth/dto/user.dto";
+import {find} from "rxjs";
 
 @Injectable()
 export class MessagesService {
@@ -60,7 +61,10 @@ export class MessagesService {
       buyer: buyer,
       seller: seller,
     });
-    await this.chatRoomRepository.save(newRoom);
+
+    if(findRoom == null) {
+      await this.chatRoomRepository.save(newRoom);
+    }
 
     return newRoom;
   }
