@@ -39,17 +39,23 @@ export class MessagesService {
     return await this.messageRepo.save(message);
   }
 
-  async openRoom(buyerId: string, sellerId: string): Promise<ChatRoomDto> {
-    const buyer = await this.userRepo.findOne({
-      where: {
-        id: buyerId,
-      },
-    });
+  async openRoom(buyer: User, sellerId: string): Promise<ChatRoomDto> {
     const seller = await this.userRepo.findOne({
       where: {
         id: sellerId,
       },
     });
+    const findRoom: ChatRoom = await this.chatRoomRepository
+        .createQueryBuilder('rooms')
+        .leftJoinAndSelect('rooms.buyer', 'buyer')
+        .leftJoinAndSelect('rooms.seller', 'seller')
+        .where({
+          buyer: buyer,
+          seller: seller,
+        }).orWhere({
+          buyer: seller,
+          seller: buyer,
+        }).getOne()
     const newRoom = await this.chatRoomRepository.create({
       buyer: buyer,
       seller: seller,

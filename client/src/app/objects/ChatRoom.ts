@@ -1,8 +1,9 @@
+import {User} from "./User";
 
 export interface ChatRoom {
   id: string;
 
-  user1: string;
+  buyer: User;
 
-  user2: string;
+  seller: User;
 }

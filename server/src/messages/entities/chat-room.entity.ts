@@ -17,6 +17,7 @@ export class ChatRoom {
     messages: Message[];
 
     @ManyToOne(() => User, (user) => user.asBuyer, {eager:false})
+
     @JoinColumn()
     buyer: User;
 

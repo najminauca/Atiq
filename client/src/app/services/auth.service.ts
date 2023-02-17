@@ -34,6 +34,10 @@ export class AuthService {
     return localStorage.getItem('accessToken');
   }
 
+  public getId() {
+    return localStorage.getItem('id');
+  }
+
   public isSeller(): boolean {
     return localStorage.getItem('role') == 'seller'
   }

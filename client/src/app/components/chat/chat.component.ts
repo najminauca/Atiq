@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { io } from 'socket.io-client';
 import {ChatRoom} from "../../objects/ChatRoom";
 import {Message} from "../../objects/Message";
+import {ActivatedRoute} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
+import {lastValueFrom} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-chat',
@@ -19,7 +23,7 @@ export class ChatComponent implements OnInit {
 
   socket = io('http//localhost:3000')
 
-  constructor() {
+  constructor(activatedRoute: ActivatedRoute, public authService: AuthService, public http: HttpClient) {
     this.newMessage = "";
     this.selectedUser = this.users[0];
     this.getAllChatroom()
@@ -37,10 +41,10 @@ export class ChatComponent implements OnInit {
     this.newMessage = '';
   }
 
-  getAllChatroom() {
-    this.socket.emit('getAllChatroom', { id: localStorage.getItem('id')}, (response: ChatRoom[]) => {
-      this.rooms = response
-    })
+  async getAllChatroom() {
+    console.log(this.authService.getId())
+    const data: any = await lastValueFrom(this.http.get('http://localhost:3000/chat/getAllChatroom/' + this.authService.getId()));
+    this.rooms = data
   }
 
   getAllMessages(id: string) {

@@ -94,4 +94,8 @@ export class ProductComponent implements OnInit {
     }
     console.log(this.isSellerLiked)
   }
+
+  onContact() {
+    this.router.navigateByUrl('/chat/' + this.productData?.seller.id)
+  }
 }

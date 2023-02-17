@@ -2,11 +2,15 @@
   <!-- Left section -->
   <div class="column">
     <div class="menu-container">
-      <div *ngFor="let user of users">
-        <div class="box" (click)="switchChat(user)" (click)="toggleHighlight()">
-
+      <div *ngFor="let room of rooms">
+        <div class="box">
           <div class="users" [ngClass]="{'highlighted': selectedUserButton}">
-            {{user}}
+            <div *ngIf="room.buyer.id == authService.getId()">
+              {{room.seller.username}}
+            </div>
+            <div *ngIf="room.seller.id == authService.getId()">
+              {{room.buyer.username}}
+            </div>
           </div>
         </div>
       </div>
@@ -18,7 +22,9 @@
     <div class="chat-container">
 
       <header class="chat-header">
-        <div class="chat-header-title">{{selectedUser}}</div>
+        <div class="chat-header-title">
+          {{selectedUser}}
+        </div>
       </header>
 
       <div class="chats-messages">

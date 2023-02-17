@@ -27,19 +27,4 @@ export class MessagesGateway {
     this.server.emit('message', message.room);
     return this.messagesService.createMessage(message);
   }
-
-  @SubscribeMessage('openRoom')
-  async openRoom(@MessageBody() buyerId: string, sellerId: string): Promise<ChatRoomDto> {
-    return this.messagesService.openRoom(buyerId, sellerId);
-  }
-
-  @SubscribeMessage('getAllChatroom')
-  async getAllChatRoom(@MessageBody() id: string): Promise<ChatRoomDto[]> {
-    return this.messagesService.getAllChatRoom(id);
-  }
-
-  @SubscribeMessage('getAllMessage')
-  async getAllMessage(@MessageBody() id: string): Promise<SendMessageDto[]> {
-    return this.messagesService.getMessages(id);
-  }
 }

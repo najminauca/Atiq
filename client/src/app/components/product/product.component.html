@@ -33,7 +33,7 @@
     <p>{{productData.seller.id}}</p>
     <p>{{productData.seller.username}}</p>
 
-    <button class="btn  btn-lg text-white mb-4" >Contact Seller</button>
+    <button class="btn  btn-lg text-white mb-4" (click)="onContact()">Contact Seller</button>
     <div class="like-btn " *ngIf="authService.isLoggedIn()">
       <button class="btn btn-lg float-end" (click)="onLike()" id="heart">
         <ng-container *ngIf="isSellerLiked; then heartIsClicked; else heartIsNotClicked"></ng-container>
