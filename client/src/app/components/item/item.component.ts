@@ -19,10 +19,10 @@ export class ItemComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getThumbnail()
     if(this.authService.isLoggedIn()) {
-      this.getThumbnail()
+      this.updateProductBool()
     }
-    this.updateProductBool()
   }
 
   async onLike() {
