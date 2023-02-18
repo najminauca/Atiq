@@ -45,10 +45,10 @@
               <div class="chats-bubble">
                 <div class="chats-info">
                   <div *ngIf="selectedRoom!!.buyer.id == authService.getId()">
-                    {{selectedRoom!!.seller.firstname}}
+                    {{selectedRoom!!.buyer.firstname}}
                   </div>
                   <div *ngIf="selectedRoom!!.seller.id == authService.getId()">
-                    {{selectedRoom!!.buyer.firstname}}
+                    {{selectedRoom!!.seller.firstname}}
                   </div>
                 </div>
                 {{message.message}}
