@@ -31,9 +31,8 @@
 
     <p class="fw-bold mb-4">{{productData.price}}$       {{productData.priceStatus }}</p>
     <p>{{productData.seller.firstname}}{{" " + productData.seller.lastname}}</p>
-    <button class="btn  btn-lg text-white mb-4" *ngIf="productData.seller.id != authService.getId()" (click)="openRoom(productData.seller.id)">Contact Seller</button>
     <div class="like-btn " *ngIf="authService.isLoggedIn()">
-      <button class="btn btn-lg float-end" (click)="onLike()" id="heart">
+      <button class="btn btn-lg  mb-3" (click)="onLike()" id="heart">
         <ng-container *ngIf="isSellerLiked; then heartIsClicked; else heartIsNotClicked"></ng-container>
       </button>
       <ng-template #heartIsClicked>
@@ -44,6 +43,19 @@
       </ng-template>
 
     </div>
+    <button class="btn  btn-lg text-white mb-4" *ngIf="productData.seller.id != authService.getId()" (click)="openRoom(productData.seller.id)">Contact Seller</button>
+<!--    <div class="like-btn " *ngIf="authService.isLoggedIn()">-->
+<!--      <button class="btn btn-lg float-end" (click)="onLike()" id="heart">-->
+<!--        <ng-container *ngIf="isSellerLiked; then heartIsClicked; else heartIsNotClicked"></ng-container>-->
+<!--      </button>-->
+<!--      <ng-template #heartIsClicked>-->
+<!--        <i class="fa fa-heart" style="color: #D0312D"></i>-->
+<!--      </ng-template>-->
+<!--      <ng-template #heartIsNotClicked>-->
+<!--        <i class="fa fa-heart-o"></i>-->
+<!--      </ng-template>-->
+
+<!--    </div>-->
   </div>
 
 </div>
