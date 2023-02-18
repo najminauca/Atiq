@@ -28,14 +28,10 @@ export class ChatComponent implements OnInit {
     this.newMessage = "";
     this.selectedUser = this.users[0];
     this.getAllChatroom()
-    this.getAllMessages()
   }
 
   ngOnInit(): void {
-    this.getAllMessages()
-
     this.socket.on('message', (message) => {
-      console.log("update message list")
       this.getAllMessages()
     })
   }
@@ -56,13 +52,13 @@ export class ChatComponent implements OnInit {
     } else {
       this.selectedRoom = this.rooms[0]
     }
+    this.getAllMessages()
   }
 
   onSelect(room: ChatRoom) {
     this.selectedRoom = room
     localStorage.setItem('currentRoom', this.selectedRoom.id)
     this.getAllMessages();
-    this.getAllMessages()
   }
 
   async getAllMessages() {

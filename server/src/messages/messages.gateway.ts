@@ -24,9 +24,6 @@ export class MessagesGateway {
   async createMessage(
       @MessageBody() message: CreateMessageDto,
   ): Promise<Message> {
-    console.log(message)
-
-    console.log('received message');
     this.server.emit('message', message);
     return this.messagesService.createMessage(message);
   }
