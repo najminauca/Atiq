@@ -19,7 +19,6 @@ export class ChatComponent implements OnInit {
   rooms: ChatRoom[] = []
   selectedRoom: ChatRoom | undefined;
   shownMessages: Message[] = []
-  selectedUser: string;
   selectedUserButton = false;
 
   socket = io('http://localhost:3000')
@@ -29,7 +28,6 @@ export class ChatComponent implements OnInit {
       route.navigateByUrl('/login')
     }
     this.newMessage = "";
-    this.selectedUser = this.users[0];
     this.getAllChatroom()
   }
 
@@ -46,7 +44,6 @@ export class ChatComponent implements OnInit {
   }
 
   async getAllChatroom() {
-    console.log(this.authService.getId())
     const data: any = await lastValueFrom(this.http.get('http://localhost:3000/chat/getAllChatroom/'));
     this.rooms = data
     const room = sessionStorage.getItem('currentRoom')
@@ -54,23 +51,20 @@ export class ChatComponent implements OnInit {
       this.selectedRoom = this.rooms.find((it) => it.id == room)
     } else {
       this.selectedRoom = this.rooms[0]
+      sessionStorage.setItem('currentRoom', this.selectedRoom!!.id)
     }
-    this.getAllMessages()
+    this.getAllMessages(this.selectedRoom!!.id)
   }
 
   onSelect(room: ChatRoom) {
     this.selectedRoom = room
     sessionStorage.setItem('currentRoom', this.selectedRoom.id)
-    this.getAllMessages();
+    this.getAllMessages(this.selectedRoom.id);
   }
 
-  async getAllMessages() {
-    const data: any = await lastValueFrom(this.http.get('http://localhost:3000/chat/getAllMessage/' + this.selectedRoom?.id));
+  async getAllMessages(id: string) {
+    const data: any = await lastValueFrom(this.http.get('http://localhost:3000/chat/getAllMessage/' + id));
     this.shownMessages = data
-  }
-
-  switchChat(user: string) {
-    this.selectedUser = user;
   }
 
   toggleHighlight() {

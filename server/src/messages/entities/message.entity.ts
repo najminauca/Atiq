@@ -13,7 +13,7 @@ export class Message {
     @ManyToOne(() => User, (user) => user.messages, {eager: false})
     sender: User;
 
-    @Column({ unique: true})
+    @Column()
     text: string;
 
     @CreateDateColumn()

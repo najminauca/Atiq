@@ -51,5 +51,6 @@ export class AuthService {
     sessionStorage.removeItem('role');
     sessionStorage.removeItem('accessToken');
     sessionStorage.removeItem('id');
+    sessionStorage.removeItem('currentRoom');
   }
 }
