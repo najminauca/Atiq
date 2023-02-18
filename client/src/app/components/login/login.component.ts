@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {AuthService} from "../../services/auth.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
@@ -9,11 +9,11 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
   loginForm!: FormGroup;
   loginError: string='' ;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) {
+  }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -21,9 +21,6 @@ export class LoginComponent implements OnInit {
       password: new FormControl(null,[Validators.required, Validators.minLength(4)])
     })
   }
-
-
-
 
   onSubmit(){
     if(this.loginForm.invalid){
@@ -37,8 +34,5 @@ export class LoginComponent implements OnInit {
         this.loginError = 'please check your credentials again.';
         console.error(error);
       });
-
-
   }
-
 }

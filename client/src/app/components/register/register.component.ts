@@ -46,6 +46,8 @@ export class RegisterComponent implements OnInit {
 
     this.registerForm = new FormGroup({
       username: new FormControl(null, [Validators.required, Validators.minLength(4)]),
+      firstname: new FormControl(null, [Validators.required, Validators.minLength(0)]),
+      lastname: new FormControl(null, [Validators.required, Validators.minLength(0)]),
       password: new FormControl(null, [Validators.required, Validators.minLength(4)]),
       confirmedPassword: new FormControl(null, [Validators.required, Validators.minLength(4)])
     }, {
@@ -58,7 +60,7 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.invalid){
       return;
     }
-    this.authService.signup(this.registerForm.value.username,this.registerForm.value.password).then(data => {
+    this.authService.signup(this.registerForm.value.username, this.registerForm.value.firstname, this.registerForm.value.lastname, this.registerForm.value.password).then(data => {
       this.router.navigate(['/login'])
         .catch(error => {
         console.log('something went wrong. Please try again');

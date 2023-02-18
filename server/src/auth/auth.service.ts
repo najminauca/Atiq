@@ -21,13 +21,16 @@ export class AuthService {
   ) {}
 
   async createUser(creteUserDto: CreateUserDto): Promise<void> {
-    const { username, password } = creteUserDto;
+    const { username, firstname, lastname, role, password } = creteUserDto;
 
     const salt = await bycrpt.genSalt();
     const hashedPassword = await bycrpt.hash(password, salt);
 
     const user = this.userRepository.create({
-      username,
+      username: username,
+      firstname: firstname,
+      lastname: lastname,
+      role: role,
       password: hashedPassword,
     });
 
@@ -52,9 +55,9 @@ export class AuthService {
     if (user && (await bycrpt.compare(password, user.password))) {
       const payload: Payload = { username };
 
-      const jwt = await this.jwtService.sign(payload);
+      const jwt = this.jwtService.sign(payload);
 
-      return { jwt };
+      return { jwt, user: user.role, id: user.id };
     } else {
       throw new NotFoundException('Wrong user information');
     }
