@@ -2,6 +2,8 @@ import {Component, Input, OnInit} from '@angular/core';
 import {lastValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "../../services/auth.service";
+import {Picture} from "../../objects/picture";
+import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-item',
@@ -11,13 +13,16 @@ import {AuthService} from "../../services/auth.service";
 export class ItemComponent implements OnInit {
   public isProductLiked?: boolean
   @Input() product: any;
-  constructor(private http: HttpClient, public authService: AuthService) {}
+  public imageUrl: SafeUrl | undefined;
+  constructor(private http: HttpClient, public authService: AuthService, private sanitizer: DomSanitizer,
+  ) {
+  }
 
   ngOnInit(): void {
-    console.log(this.product)
     if(this.authService.isLoggedIn()) {
-      this.updateProductBool()
+      this.getThumbnail()
     }
+    this.updateProductBool()
   }
 
   async onLike() {
@@ -44,5 +49,18 @@ export class ItemComponent implements OnInit {
       console.log(e)
     }
     console.log(this.isProductLiked)
+  }
+
+  async getThumbnail(){
+    const data: any = await lastValueFrom(this.http.get("http://localhost:3000/picture/get-pictures/"+ this.product.id));
+    const imagePath: Picture[] = data;
+
+    this.http.get("http://localhost:3000/picture/get-image/" + imagePath[0].picture, {
+      responseType: 'blob'
+    }).subscribe(data =>{
+      console.log(data);
+      const unsafeImageUrl = URL.createObjectURL(data);
+      this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(unsafeImageUrl);
+    });
   }
 }

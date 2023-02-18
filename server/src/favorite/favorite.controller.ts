@@ -8,6 +8,7 @@ import {FavSellerDto} from "./dto/fav-seller.dto";
 import {ProductListDto} from "../product/dto/product-list.dto";
 import {Product} from "../product/product.entity";
 import {ProductListController} from "../product/product-list.controller";
+import {BoolDto} from "./dto/BoolDto";
 
 @Controller('favorite')
 @UseGuards(AuthGuard('jwt'))

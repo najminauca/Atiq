@@ -16,6 +16,7 @@ import {ProductDto} from "../product/dto/product.dto";
 import {UserDto} from "../auth/dto/user.dto";
 import {ProductListDto} from "../product/dto/product-list.dto";
 import {ProductListController} from "../product/product-list.controller";
+import {BoolDto} from "./dto/BoolDto";
 
 @Injectable()
 export class FavoriteService {
@@ -48,6 +49,7 @@ export class FavoriteService {
                 'server error',
             );
         }
+
     }
     async deleteFavoriteSeller(seller: FavSellerDto, user: User): Promise<void> {
         const getSeller = await this.userRepo.findOne({
@@ -67,12 +69,13 @@ export class FavoriteService {
                 id: id
             }
         })
-        const isFavorite = await this.favoriteSeller.findOne({
-            where: {
+        const isFavorite = await this.favoriteSeller.createQueryBuilder('favProduct')
+            .leftJoinAndSelect('favProduct.seller', 'seller')
+            .leftJoinAndSelect('favProduct.user', 'user')
+            .where({
                 user: user,
                 seller: favSeller
-            }
-        })
+            }).getOne()
 
         return isFavorite != null
     }
@@ -151,12 +154,13 @@ export class FavoriteService {
                 id: id
             }
         })
-        const isFavorite = await this.favoriteProduct.findOne({
-            where: {
+        const isFavorite = await this.favoriteProduct.createQueryBuilder('favProduct')
+            .leftJoinAndSelect('favProduct.product', 'product')
+            .leftJoinAndSelect('favProduct.user', 'user')
+            .where({
                 user: user,
                 product: favProduct
-            }
-        })
+            }).getOne()
 
         return isFavorite != null
     }
