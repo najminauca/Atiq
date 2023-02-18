@@ -19,7 +19,6 @@ export class PictureController {
   @UseInterceptors(FilesInterceptor('file', null, multerOptions))
   async uploadFile(@UploadedFiles() file, @Body() addPictDto: PictureDto) {
     const fileValue = file[0];
-    console.log(file);
     return this.pictureService.savePicture(fileValue.filename, addPictDto);
   }
 

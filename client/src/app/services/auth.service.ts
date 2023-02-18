@@ -15,10 +15,10 @@ export class AuthService {
       password
     }));
     console.log(accessToken);
-    localStorage.setItem('username', username)
-    localStorage.setItem('role', accessToken.user)
-    localStorage.setItem('accessToken', accessToken.jwt);
-    localStorage.setItem('id', accessToken.id)
+    sessionStorage.setItem('username', username)
+    sessionStorage.setItem('role', accessToken.user)
+    sessionStorage.setItem('accessToken', accessToken.jwt);
+    sessionStorage.setItem('id', accessToken.id)
   }
 
   async signup(username: string, firstname: string, lastname: string, password: string){
@@ -31,15 +31,15 @@ export class AuthService {
   }
 
   public getToken() {
-    return localStorage.getItem('accessToken');
+    return sessionStorage.getItem('accessToken');
   }
 
   public getId() {
-    return localStorage.getItem('id');
+    return sessionStorage.getItem('id');
   }
 
   public isSeller(): boolean {
-    return localStorage.getItem('role') == 'seller'
+    return sessionStorage.getItem('role') == 'seller'
   }
 
   public isLoggedIn() {
@@ -47,9 +47,9 @@ export class AuthService {
   }
 
   public logOut() {
-    localStorage.removeItem('username');
-    localStorage.removeItem('role');
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('id');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('role');
+    sessionStorage.removeItem('accessToken');
+    sessionStorage.removeItem('id');
   }
 }

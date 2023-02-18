@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { io } from 'socket.io-client';
 import {ChatRoom} from "../../objects/ChatRoom";
 import {Message} from "../../objects/Message";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {AuthService} from "../../services/auth.service";
 import {lastValueFrom} from "rxjs";
 import {HttpClient} from "@angular/common/http";
@@ -24,7 +24,10 @@ export class ChatComponent implements OnInit {
 
   socket = io('http://localhost:3000')
 
-  constructor(public activatedRoute: ActivatedRoute, public authService: AuthService, public http: HttpClient) {
+  constructor(public route: Router, public authService: AuthService, public http: HttpClient) {
+    if(!authService.isLoggedIn()) {
+      route.navigateByUrl('/login')
+    }
     this.newMessage = "";
     this.selectedUser = this.users[0];
     this.getAllChatroom()
@@ -32,7 +35,7 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.socket.on('message', (message) => {
-      this.getAllMessages()
+      this.getAllChatroom()
     })
   }
 
@@ -46,7 +49,7 @@ export class ChatComponent implements OnInit {
     console.log(this.authService.getId())
     const data: any = await lastValueFrom(this.http.get('http://localhost:3000/chat/getAllChatroom/'));
     this.rooms = data
-    const room = localStorage.getItem('currentRoom')
+    const room = sessionStorage.getItem('currentRoom')
     if(room != null) {
       this.selectedRoom = this.rooms.find((it) => it.id == room)
     } else {
@@ -57,7 +60,7 @@ export class ChatComponent implements OnInit {
 
   onSelect(room: ChatRoom) {
     this.selectedRoom = room
-    localStorage.setItem('currentRoom', this.selectedRoom.id)
+    sessionStorage.setItem('currentRoom', this.selectedRoom.id)
     this.getAllMessages();
   }
 

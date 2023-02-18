@@ -100,6 +100,6 @@ export class ProductComponent implements OnInit {
     const data: any = await lastValueFrom(this.http.get('http://localhost:3000/chat/open/' + id));
     const room: ChatRoom = data
     await this.router.navigateByUrl('/chat')
-    localStorage.setItem('currentRoom', room.id)
+    sessionStorage.setItem('currentRoom', room.id)
   }
 }
