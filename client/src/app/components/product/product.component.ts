@@ -97,6 +97,9 @@ export class ProductComponent implements OnInit {
   }
 
   async openRoom(id: string) {
+    if(!this.authService.isLoggedIn()) {
+      this.router.navigateByUrl('/login')
+    }
     const data: any = await lastValueFrom(this.http.get('http://localhost:3000/chat/open/' + id));
     const room: ChatRoom = data
     await this.router.navigateByUrl('/chat')

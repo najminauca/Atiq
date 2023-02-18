@@ -3,7 +3,7 @@
 <div class="">
   <h1 class="text-center pt-5 fs-1 fw-bold">Sign up </h1>
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit() "  class="text-center ">
-    <div class="mb-3 pt-5 ">
+    <div class="pt-4 ">
       <label for="exampleInputEmail1" class="form-label fw-bold ">Username</label>
       <div class="d-flex justify-content-center">
         <input type="text" class="form-control rounded-pill " id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="username"
@@ -13,7 +13,7 @@
       </div>
       <div *ngIf="registerForm.controls['username'].errors" id="emailHelp" class="form-text">Username is required.</div>
     </div>
-    <div class="mb-3 pt-5 ">
+    <div class="pt-5 ">
       <label for="exampleInputEmail1" class="form-label fw-bold ">Firstname</label>
       <div class="d-flex justify-content-center">
         <input type="text" class="form-control rounded-pill " id="firstname" aria-describedby="emailHelp" formControlName="firstname"
@@ -23,7 +23,7 @@
       </div>
       <div *ngIf="registerForm.controls['firstname'].errors" id="firstnameHelp" class="form-text">FirstName is required.</div>
     </div>
-    <div class="mb-3 pt-5 ">
+    <div class="pt-5 ">
       <label for="exampleInputEmail1" class="form-label fw-bold ">LastName</label>
       <div class="d-flex justify-content-center">
         <input type="text" class="form-control rounded-pill " id="lastName" aria-describedby="emailHelp" formControlName="lastname"
@@ -33,7 +33,7 @@
       </div>
       <div *ngIf="registerForm.controls['lastname'].errors" id="lastNameHelp" class="form-text">Lastname is required.</div>
     </div>
-    <div class="mb-3 pt-5 ">
+    <div class="pt-5 ">
       <label for="exampleInputPassword1" class="form-label fw-bold ">Password</label>
       <div class="d-flex justify-content-center">
         <input type="password" class="form-control rounded-pill " id="exampleInputPassword1" formControlName="password"
