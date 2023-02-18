@@ -30,7 +30,7 @@ import {Message} from "./messages/entities/message.entity";
         PicturesEntity,
       ],
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: false,
     }),
     AuthModule,
     ProductModule,
