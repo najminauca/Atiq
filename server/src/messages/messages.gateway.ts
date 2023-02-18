@@ -22,9 +22,12 @@ export class MessagesGateway {
   constructor(private readonly messagesService: MessagesService) {}
   @SubscribeMessage('sendMessage')
   async createMessage(
-    @MessageBody() message: CreateMessageDto,
+      @MessageBody() message: CreateMessageDto,
   ): Promise<Message> {
-    this.server.emit('message', message.room);
+    console.log(message)
+
+    console.log('received message');
+    this.server.emit('message', message);
     return this.messagesService.createMessage(message);
   }
 }

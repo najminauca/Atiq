@@ -9,6 +9,7 @@ import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap
 import {Picture} from "../../objects/picture";
 import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {AuthService} from "../../services/auth.service";
+import {ChatRoom} from "../../objects/ChatRoom";
 
 @Component({
   selector: 'app-product',
@@ -95,7 +96,10 @@ export class ProductComponent implements OnInit {
     console.log(this.isSellerLiked)
   }
 
-  onContact() {
-    this.router.navigateByUrl('/chat/' + this.productData?.seller.id)
+  async openRoom(id: string) {
+    const data: any = await lastValueFrom(this.http.get('http://localhost:3000/chat/open/' + id));
+    const room: ChatRoom = data
+    await this.router.navigateByUrl('/chat')
+    localStorage.setItem('currentRoom', room.id)
   }
 }

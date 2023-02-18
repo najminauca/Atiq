@@ -12,9 +12,9 @@ import {User} from "../auth/user.entity";
 export class MessagesController {
     constructor(private messagesService: MessagesService) {}
 
-    @Get('/getAllChatroom/:id')
-    async getAllChatRoom(@Param('id') id: string): Promise<ChatRoomDto[]> {
-        return this.messagesService.getAllChatRoom(id);
+    @Get('/getAllChatroom')
+    async getAllChatRoom(@GetUser() user: User): Promise<ChatRoomDto[]> {
+        return this.messagesService.getAllChatRoom(user);
     }
 
     @Get('/getAllMessage/:id')
@@ -22,7 +22,7 @@ export class MessagesController {
         return this.messagesService.getMessages(id);
     }
 
-    @Post('/open/:id')
+    @Get('/open/:id')
     async openRoom(@Param('id') sellerId: string, @GetUser() buyer: User): Promise<ChatRoomDto> {
         return this.messagesService.openRoom(buyer, sellerId);
     }

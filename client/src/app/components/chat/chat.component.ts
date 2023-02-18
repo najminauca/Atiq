@@ -17,13 +17,14 @@ export class ChatComponent implements OnInit {
   newMessage: string;
   users = ['Hicham', 'Najmi', 'Yohanes', 'Sarah'];
   rooms: ChatRoom[] = []
+  selectedRoom: ChatRoom | undefined;
   shownMessages: Message[] = []
   selectedUser: string;
   selectedUserButton = false;
 
-  socket = io('http//localhost:3000')
+  socket = io('http://localhost:3000')
 
-  constructor(activatedRoute: ActivatedRoute, public authService: AuthService, public http: HttpClient) {
+  constructor(public activatedRoute: ActivatedRoute, public authService: AuthService, public http: HttpClient) {
     this.newMessage = "";
     this.selectedUser = this.users[0];
     this.getAllChatroom()
@@ -31,32 +32,38 @@ export class ChatComponent implements OnInit {
 
   ngOnInit(): void {
     this.socket.on('message', (message) => {
+      console.log("update message list")
       //TODO: Refresh chat room messages (HTML)
     })
   }
 
   sendMessage() {
-    this.socket.emit('sendMessage', {}, () => {})
-    this.messages.push(this.newMessage);
+    const user = this.selectedRoom?.buyer.id == this.authService.getId() ? this.selectedRoom?.buyer : this.selectedRoom?.seller
+    this.socket.emit('sendMessage', { room: this.selectedRoom?.id, sender: user?.id, message: this.newMessage}, () => {})
     this.newMessage = '';
   }
 
   async getAllChatroom() {
     console.log(this.authService.getId())
-    const data: any = await lastValueFrom(this.http.get('http://localhost:3000/chat/getAllChatroom/' + this.authService.getId()));
+    const data: any = await lastValueFrom(this.http.get('http://localhost:3000/chat/getAllChatroom/'));
     this.rooms = data
+    const room = localStorage.getItem('currentRoom')
+    if(room != null) {
+      this.selectedRoom = this.rooms.find((it) => it.id == room)
+    } else {
+      this.selectedRoom = this.rooms[0]
+    }
   }
 
-  getAllMessages(id: string) {
-    this.socket.emit('getAllMessage', { id: id }, (response: Message[]) => {
-      this.shownMessages = response
-    })
+  onSelect(room: ChatRoom) {
+    this.selectedRoom = room
+    localStorage.setItem('currentRoom', this.selectedRoom.id)
+    this.getAllMessages();
   }
 
-  openRoom(sellerId: string) {
-    this.socket.emit('openRoom', { buyerId: localStorage.getItem('id'), sellerId: sellerId }, (room: ChatRoom) => {
-      this.getAllChatroom() //Update room list
-    })
+  async getAllMessages() {
+    const data: any = await lastValueFrom(this.http.get('http://localhost:3000/chat/getAllMessage/' + this.selectedRoom?.id));
+    this.shownMessages = data
   }
 
   switchChat(user: string) {

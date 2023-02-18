@@ -57,16 +57,18 @@ export class MessagesService {
           buyer: seller,
           seller: buyer,
         }).getOne()
+
     const newRoom = await this.chatRoomRepository.create({
       buyer: buyer,
       seller: seller,
     });
 
-    if(findRoom == null) {
+    if (findRoom == null) {
       await this.chatRoomRepository.save(newRoom);
+      return newRoom;
+    } else {
+      return findRoom;
     }
-
-    return newRoom;
   }
 
   async getMessages(id: string): Promise<SendMessageDto[]> {
@@ -98,12 +100,7 @@ export class MessagesService {
     return messagesDto;
   }
 
-  async getAllChatRoom(id: string): Promise<ChatRoomDto[]> {
-    const user = this.userRepo.findOne({
-      where: {
-        id: id,
-      },
-    });
+  async getAllChatRoom(user: User): Promise<ChatRoomDto[]> {
     const rooms: ChatRoom[] = await this.chatRoomRepository
       .createQueryBuilder('rooms')
         .leftJoinAndSelect('rooms.buyer', 'buyer')
